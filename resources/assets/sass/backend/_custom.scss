@@ -1,0 +1,67 @@
+// Here you can add other styles
+.sidebar .nav .nav-item .nav-link:hover i, .sidebar .nav .nav-item .navbar .dropdown-toggle:hover i, .navbar .sidebar .nav .nav-item .dropdown-toggle:hover i {
+  color: #fff !important;
+}
+
+body {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/*.breadcrumb-menu .btn {
+  padding-top: 0.60rem;
+  padding-bottom: 0.5rem;
+}*/
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  padding-top: 0.5rem;
+}
+
+.btn-danger {
+  color: #fff !important;
+  background-color: #f86c6b;
+  border-color: #f86c6b;
+}
+
+.btn-info {
+  color: #FFF;
+  background-color: #63c2de;
+  border-color: #63c2de;
+}
+
+.btn-info:hover {
+  color: #FFF;
+  background-color: #43b6d7;
+  border-color: #39b2d5;
+}
+
+.btn .badge {
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  font-size: 9px;
+}
+
+.top .notific8-notification {
+  margin-top: 1.625em;
+}
+
+.notific8-notification.family-materialish.lilrobot,
+.notific8-notification.materialish.lilrobot {
+  background-color: #28a745 !important;
+  color: #eee;
+}
+
+.cart-table-hover tbody tr:hover {
+  background-color: #e6f6fb;
+  cursor: pointer;
+}
+
+.card-body-order, .card-block, .card-block {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.4rem;
+}
