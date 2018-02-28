@@ -36,7 +36,7 @@ class ClientController extends Controller
      */
     public function index(ManageClientRequest $request)
     {
-        //
+        return view('backend.client.index')->with
     }
 
     /**
