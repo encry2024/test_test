@@ -43,38 +43,12 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        {{ html()->label(html()->checkbox('remember', true, 1) . ' ' . __('labels.frontend.auth.remember_me'))->for('remember') }}
-                                    </div>
-                                </div><!--form-group-->
-                            </div><!--col-->
-                        </div><!--row-->
-
-                        <div class="row">
-                            <div class="col">
                                 <div class="form-group clearfix">
                                     {{ form_submit(__('labels.frontend.auth.login_button')) }}
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group text-right">
-                                    <a href="{{ route('frontend.auth.password.reset') }}">{{ __('labels.frontend.passwords.forgot_password') }}</a>
-                                </div><!--form-group-->
-                            </div><!--col-->
-                        </div><!--row-->
                     {{ html()->form()->close() }}
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="text-center">
-                                {!! $socialiteLinks !!}
-                            </div>
-                        </div><!--col-->
-                    </div><!--row-->
                 </div><!--card body-->
             </div><!--card-->
         </div><!-- col-md-8 -->
