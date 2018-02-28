@@ -45,9 +45,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ManageClientRequest $request)
     {
-        //
+        return view('backend.client.create');
     }
 
     /**
@@ -56,9 +56,18 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        //
+        $this->clientRepository->create($request->only(
+            'name',
+            'contact_person_first_name',
+            'contact_person_last_name',
+            'contact_person_email',
+            'contact_person_contact_number',
+            'address'
+        ));
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.clients.created', ['client' => strtoupper($request->name)]));
     }
 
     /**

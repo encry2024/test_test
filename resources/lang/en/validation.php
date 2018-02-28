@@ -120,12 +120,12 @@ return [
 
         'backend' => [
             'client'  =>  [
-                'name'                  =>  'Client Name',
-                'email'                 =>  'E-mail',
-                'contact_number'        =>  'Contact Number',
-                'address'               =>  'Address',
-                'discount'              =>  'Discount',
-                'credit_limit'          =>  'Credit Limit'
+                'name'                          =>  'Name',
+                'contact_person_first_name'     => 'Contact Person First Name',
+                'contact_person_last_name'      => 'Contact Person Last Name',
+                'contact_person_email'          =>  'Contact Person E-mail',
+                'contact_person_contact_number' =>  'Contact Person Number',
+                'address'                       =>  'Address'
             ],
 
             'inventory'  =>  [
@@ -134,7 +134,7 @@ return [
                 'price_per_unit'            =>  'Price/Unit',
                 'unit_type'                 =>  'Unit Type',
                 'stocks'                    =>  'Stocks',
-                'critical_stocks_level'      =>  'Critical Stocks Level'
+                'critical_stocks_level'     =>  'Critical Stocks Level'
             ],
 
             'distributor'  =>  [

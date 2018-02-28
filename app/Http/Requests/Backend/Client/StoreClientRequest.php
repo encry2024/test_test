@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClientRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->can('create client');
     }
 
     /**
@@ -24,7 +25,12 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'                           => 'required|max:60',
+            'contact_person_first_name'      => 'required|max:60',
+            'contact_person_last_name'       => 'required|max:60',
+            'contact_person_email'           => ['required', 'email', 'max:191', Rule::unique('clients')],
+            'contact_person_contact_number'  => 'required|max:13',
+            'address'                        => 'required'
         ];
     }
 }
