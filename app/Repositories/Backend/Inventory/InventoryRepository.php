@@ -96,7 +96,7 @@ class InventoryRepository extends BaseRepository
         return DB::transaction(function () use ($inventory, $data) {
             if ($inventory->update([
                 'distributor_id'        =>  $data['distributor'],
-                'unit_type_id'          =>  $data['unit_type_id'],
+                'unit_type_id'          =>  $data['unit_type'],
                 'name'                  =>  strtoupper($data['name']),
                 'stocks'                =>  $data['stocks'],
                 'critical_stocks_level' =>  $data['critical_stocks_level'],

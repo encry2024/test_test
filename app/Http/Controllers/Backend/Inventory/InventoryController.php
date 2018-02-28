@@ -82,9 +82,9 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Inventory $inventory, ManageInventoryRequest $request)
     {
-        //
+        return view('backend.inventory.show')->withItem($inventory);
     }
 
     /**
@@ -93,9 +93,12 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Inventory $inventory, ManageInventoryRequest $request)
     {
-        //
+        $distributors   = Distributor::all();
+        $unit_types     = UnitType::all();
+
+        return view('backend.inventory.edit')->withInventory($inventory)->withDistributors($distributors)->with('unit_types', $unit_types);
     }
 
     /**
@@ -105,9 +108,18 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateInventoryRequest $request, Inventory $inventory)
     {
-        //
+        $this->inventoryRepository->update($inventory, $request->only(
+            'distributor',
+            'unit_type',
+            'name',
+            'stocks',
+            'critical_stocks_level',
+            'price_per_unit'
+        ));
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.inventories.updated', ['item' => $inventory->name]));
     }
 
     /**
@@ -116,8 +128,12 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Inventory $inventory, ManageInventoryRequest $request)
     {
-        //
+        $this->inventoryRepository->deleteById($inventory->id);
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.inventories.deleted', ['item' => $inventory->name]));
+
+        // return redirect()->route('admin.inventory.deleted')->withFlashSuccess(__('alerts.backend.inventorys.deleted', ['inventory' => $inventory->name]));
     }
 }

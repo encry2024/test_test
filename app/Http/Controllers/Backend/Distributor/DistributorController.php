@@ -116,6 +116,7 @@ class DistributorController extends Controller
     {
         $this->distributorRepository->deleteById($distributor->id);
 
-        return redirect()->route('admin.supplier.deleted')->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
+        // return redirect()->route('admin.supplier.deleted')->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
     }
 }

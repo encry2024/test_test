@@ -76,9 +76,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client, ManageClientRequest $request)
     {
-        //
+        return view('backend.client.show')->withClient($client);
     }
 
     /**
@@ -87,9 +87,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client, ManageClientRequest $request)
     {
-        //
+        return view('backend.client.edit')->withClient($client);
     }
 
     /**
@@ -99,9 +99,18 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $this->clientRepository->update($client, $request->only(
+            'name',
+            'contact_person_first_name',
+            'contact_person_last_name',
+            'contact_person_email',
+            'contact_person_contact_number',
+            'address'
+        ));
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.clients.updated', ['client' => $client->name]));
     }
 
     /**
@@ -110,8 +119,12 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client, ManageClientRequest $request)
     {
-        //
+        $this->clientRepository->deleteById($client->id);
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.clients.deleted', ['client' => $client->name]));
+
+        // return redirect()->route('admin.client.deleted')->withFlashSuccess(__('alerts.backend.clients.deleted', ['client' => $client->name]));
     }
 }

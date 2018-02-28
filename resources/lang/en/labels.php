@@ -87,9 +87,9 @@ return [
 
         'inventories'  =>  [
             'create'    =>  'Create Item',
-            'edit'      =>  'Edit :item',
+            'edit'      =>  'Edit :inventory',
             'list'      =>  'Item\'s List',
-            'view'      =>  'View :item',
+            'view'      =>  'View :inventory',
             'deleted'   =>  'Deleted Items',
 
             'management'    =>  'Inventory Management',
@@ -104,7 +104,7 @@ return [
                 'created_at'            =>  'Date Created',
                 'updated_at'            =>  'Date Updated',
                 'deleted_at'            =>  'Date Deleted',
-                'total'                 =>  'item total|item total',
+                'total'                 =>  'inventory total|inventory total',
             ],
 
             'tabs'  =>  [
@@ -119,7 +119,8 @@ return [
                         'distributor'           =>  'Distributor',
                         'price_per_unit'        =>  'Price/Unit',
                         'unit_type'             =>  'Unit Type',
-                        'stock'                 =>  'Stocks',
+                        'stocks'                =>  'Stocks',
+                        'critical_stocks_level' =>  'Critical Stocks',
                         'created_at'            =>  'Date Created',
                         'updated_at'            =>  'Date Updated',
                         'deleted_at'            =>  'Date Deleted',
@@ -143,8 +144,8 @@ return [
 
             'table' =>  [
                 'id'                                =>  'ID',
-                'name'                              =>  'Client Name',
-                'contact_person_first_name'         =>  'Contact Preson First Name',
+                'name'                              =>  'Name',
+                'contact_person_first_name'         =>  'Contact Person First Name',
                 'contact_person_last_name'          =>  'Contact Person Last Name',
                 'contact_person_email'              =>  'E-mail',
                 'contact_person_contact_number'     =>  'Contact Number',
@@ -162,16 +163,16 @@ return [
 
                 'content'   =>  [
                     'overview'  =>  [
-                        'id'                =>  'ID',
-                        'name'              =>  'Client Name',
-                        'email'             =>  'E-mail',
-                        'contact_number'    =>  'Contact Number',
-                        'address'           =>  'Address',
-                        'discount'          =>  'Discount',
-                        'credit_limit'      =>  'Credit Limit',
-                        'created_at'        =>  'Date Created',
-                        'updated_at'        =>  'Date Updated',
-                        'deleted_at'        =>  'Date Deleted',
+                        'id'                                =>  'ID',
+                        'name'                              =>  'Name',
+                        'contact_person_first_name'         =>  'Contact Person First Name',
+                        'contact_person_last_name'          =>  'Contact Person Last Name',
+                        'contact_person_email'              =>  'E-mail',
+                        'contact_person_contact_number'     =>  'Contact Number',
+                        'address'                           =>  'Address',
+                        'created_at'                        =>  'Date Created',
+                        'updated_at'                        =>  'Date Updated',
+                        'deleted_at'                        =>  'Date Deleted',
                     ]
                 ]
             ],

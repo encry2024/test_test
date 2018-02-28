@@ -8,17 +8,22 @@
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.distributor') }}</th>
-                <td>{{ $item->distributor->name }}</td>
+                <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a></td>
             </tr>
 
             <tr>
-                <th>{{ __('labels.backend.inventories.tabs.content.overview.item_size') }}</th>
-                <td>{{ $item->item_size->name }}</td>
+                <th>{{ __('labels.backend.inventories.tabs.content.overview.unit_type') }}</th>
+                <td>{{ $item->unit_type->name }}</td>
             </tr>
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.stocks') }}</th>
-                <td>{{ $item->stocks }}</td>
+                <td>{{ $item->stocks }} {{ $item->unit_type->name }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ __('labels.backend.inventories.tabs.content.overview.critical_stocks_level') }}</th>
+                <td>{{ $item->critical_stocks_level }} {{ $item->unit_type->name }}</td>
             </tr>
 
             <tr>
@@ -28,12 +33,12 @@
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.created_at') }}</th>
-                <td>{{ $item->created_at->diffForHumans() }}</td>
+                <td>{{ date('F d, Y (h:i A)', strtotime($item->created_at)) }}</td>
             </tr>
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.updated_at') }}</th>
-                <td>{{ $item->updated_at->diffForHumans() }}</td>
+                <td>{{ date('F d, Y (h:i A)', strtotime($item->updated_at)) }}</td>
             </tr>
         </table>
     </div>

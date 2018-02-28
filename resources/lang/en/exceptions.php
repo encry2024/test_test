@@ -20,6 +20,7 @@ return [
             'delete_error'          => 'There was a problem deleting this client. Please try again.',
             'delete_first'          => 'This client must be deleted first before it can be destroyed permanently.',
             'email_error'           => 'That email address belongs to a different client.',
+            'update_error'          => 'There was a problem updating this client. Please try again.',
         ],
 
         'distributors'  =>  [
@@ -28,6 +29,7 @@ return [
             'delete_error'          => 'There was a problem deleting this distributor. Please try again.',
             'delete_first'          => 'This distributor must be deleted first before it can be destroyed permanently.',
             'email_error'           => 'That email address belongs to a different distributor.',
+            'update_error'          => 'There was a problem updating this distributor. Please try again.',
         ],
 
         'inventories'  =>  [
@@ -36,6 +38,7 @@ return [
             'delete_error'          => 'There was a problem deleting this item. Please try again.',
             'delete_first'          => 'This item must be deleted first before it can be destroyed permanently.',
             'email_error'           => 'That email address belongs to a different item.',
+            'update_error'          => 'There was a problem updating this item. Please try again.',
         ],
 
         'access' => [

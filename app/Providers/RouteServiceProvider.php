@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Models\Auth\User;
 use App\Models\Distributor\Distributor;
+use App\Models\Inventory\Inventory;
+use App\Models\Client\Client;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -46,6 +49,18 @@ class RouteServiceProvider extends ServiceProvider
             $distributor = new Distributor;
 
             return Distributor::withTrashed()->where($distributor->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('deletedInventory', function ($value) {
+            $inventory = new Inventory;
+
+            return Inventory::withTrashed()->where($inventory->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('deletedClient', function ($value) {
+            $client = new Client;
+
+            return Client::withTrashed()->where($client->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();

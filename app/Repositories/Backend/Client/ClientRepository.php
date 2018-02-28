@@ -13,7 +13,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Client\Client;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
-use App\Events\Backend\Client\ClientCreated;
 
 /**
  * Class ClientRepository.
@@ -67,11 +66,11 @@ class ClientRepository extends BaseRepository
         return DB::transaction(function () use ($data) {
             $client = parent::create([
                 'name'                              =>  strtoupper($data['name']),
-                'contact_person_first_name'         =>  $data['contact_person_first_name'],
-                'contact_person_last_name'          =>  $data['contact_person_last_name'],
+                'contact_person_first_name'         =>  strtoupper($data['contact_person_first_name']),
+                'contact_person_last_name'          =>  strtoupper($data['contact_person_last_name']),
                 'contact_person_contact_number'     =>  $data['contact_person_contact_number'],
                 'contact_person_email'              =>  $data['contact_person_email'],
-                'address'                           =>  $data['address']
+                'address'                           =>  strtoupper($data['address'])
             ]);
 
             if ($client) {
