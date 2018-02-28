@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 # Models
 use App\Models\Client\Client;
 # Repository
-use App\Repository\Backend\Client\ClientRepository;
+use App\Repositories\Backend\Client\ClientRepository;
 
 
 class ClientController extends Controller
@@ -36,7 +36,8 @@ class ClientController extends Controller
      */
     public function index(ManageClientRequest $request)
     {
-        return view('backend.client.index')->with
+        return view('backend.client.index')
+            ->withClients($this->clientRepository->getPaginatedClient(25, 'id', 'desc'));
     }
 
     /**

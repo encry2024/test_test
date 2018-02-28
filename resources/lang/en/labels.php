@@ -142,17 +142,17 @@ return [
             'management'    =>  'Client Management',
 
             'table' =>  [
-                'id'                =>  'ID',
-                'name'              =>  'Client Name',
-                'email'             =>  'E-mail',
-                'contact_number'    =>  'Contact Number',
-                'address'           =>  'Address',
-                'discount'          =>  'Discount',
-                'credit_limit'      =>  'Credit Limit',
-                'created_at'        =>  'Date Created',
-                'updated_at'        =>  'Date Updated',
-                'deleted_at'        =>  'Date Deleted',
-                'total'             =>  'client total|clients total'
+                'id'                                =>  'ID',
+                'name'                              =>  'Client Name',
+                'contact_person_first_name'         =>  'Contact Preson First Name',
+                'contact_person_last_name'          =>  'Contact Person Last Name',
+                'contact_person_email'              =>  'E-mail',
+                'contact_person_contact_number'     =>  'Contact Number',
+                'address'                           =>  'Address',
+                'created_at'                        =>  'Date Created',
+                'updated_at'                        =>  'Date Updated',
+                'deleted_at'                        =>  'Date Deleted',
+                'total'                             =>  'client total|clients total'
             ],
 
             'tabs'  =>  [

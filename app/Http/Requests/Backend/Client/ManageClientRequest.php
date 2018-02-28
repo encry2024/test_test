@@ -13,7 +13,7 @@ class ManageClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user()->can('view client');
     }
 
     /**
