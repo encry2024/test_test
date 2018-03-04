@@ -17,7 +17,6 @@ use App\Models\UnitType\UnitType;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 
-
 /**
  * Class InventoryRepository.
  */
@@ -72,8 +71,8 @@ class InventoryRepository extends BaseRepository
                 'distributor_id'        =>  $data['distributor'],
                 'unit_type_id'          =>  $data['unit_type'],
                 'name'                  =>  strtoupper($data['name']),
-                'stocks'                =>  $data['stocks'],
-                'critical_stocks_level' =>  $data['critical_stocks_level'],
+                'stocks'                =>  str_replace(',','',$data['stocks']),
+                'critical_stocks_level' =>  str_replace(',','',$data['critical_stocks_level']),
                 'price_per_unit'        =>  str_replace(',','',$data['price_per_unit'])
             ]);
 
@@ -98,8 +97,8 @@ class InventoryRepository extends BaseRepository
                 'distributor_id'        =>  $data['distributor'],
                 'unit_type_id'          =>  $data['unit_type'],
                 'name'                  =>  strtoupper($data['name']),
-                'stocks'                =>  $data['stocks'],
-                'critical_stocks_level' =>  $data['critical_stocks_level'],
+                'stocks'                =>  str_replace(',','',$data['stocks']),
+                'critical_stocks_level' =>  str_replace(',','',$data['critical_stocks_level']),
                 'price_per_unit'        =>  str_replace(',','',$data['price_per_unit'])
             ]))
 
