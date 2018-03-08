@@ -13,6 +13,7 @@ Route::group([
     Route::resource('client', 'ClientController');
 
     Route::group(['prefix' => 'client/{deletedClient}'], function () {
+        Route::get('/deleted', 'ClientStatusController@showDeletedProfile')->name('client.deleted-profile');
         Route::get('delete', 'ClientStatusController@delete')->name('client.delete-permanently');
         Route::get('restore', 'ClientStatusController@restore')->name('client.restore');
     });

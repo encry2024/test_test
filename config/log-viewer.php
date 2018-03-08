@@ -81,7 +81,7 @@ return [
     'menu'  => [
         'filter-route'  => 'log-viewer::logs.filter',
 
-        'icons-enabled' => true,
+        'icons-enabled' => false,
     ],
 
     /* -----------------------------------------------------------------

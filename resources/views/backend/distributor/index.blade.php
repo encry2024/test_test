@@ -3,7 +3,7 @@
 @section ('title', app_name() . ' | ' . __('labels.backend.distributors.management'))
 
 @section('breadcrumb-links')
-    @include('backend.auth.user.includes.breadcrumb-links')
+    @include('backend.distributor.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -27,7 +27,6 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>{{ __('labels.backend.distributors.table.id') }}</th>
                                     <th>{{ __('labels.backend.distributors.table.name') }}</th>
                                     <th>{{ __('labels.backend.distributors.table.contact_person_first_name') }}</th>
                                     <th>{{ __('labels.backend.distributors.table.contact_person_last_name') }}</th>
@@ -40,7 +39,6 @@
                             <tbody>
                                 @foreach ($distributors as $distributor)
                                     <tr>
-                                        <td>{{ $distributor->id }}</td>
                                         <td>{{ $distributor->name }}</td>
                                         <td>{{ $distributor->contact_person_first_name }}</td>
                                         <td>{{ $distributor->contact_person_last_name }}</td>

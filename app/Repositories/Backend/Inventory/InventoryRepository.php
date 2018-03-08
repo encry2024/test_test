@@ -8,14 +8,22 @@
 
 namespace App\Repositories\Backend\Inventory;
 
+# Facades
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+# Models
 use App\Models\Inventory\Inventory;
 use App\Models\UnitType\UnitType;
-
+use Auth;
+# Exceptions
 use App\Exceptions\GeneralException;
+# Repository
 use App\Repositories\BaseRepository;
+# Events
+use App\Events\Backend\Inventory\InventoryCreated;
+use App\Events\Backend\Inventory\InventoryUpdated;
+use App\Events\Backend\Inventory\InventoryRestored;
+use App\Events\Backend\Inventory\InventoryPermanentlyDeleted;
 
 /**
  * Class InventoryRepository.
@@ -77,6 +85,11 @@ class InventoryRepository extends BaseRepository
             ]);
 
             if ($inventory) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+
+                event(new InventoryCreated($auth_link, $asset_link));
+
                 return $inventory;
             }
 
@@ -103,6 +116,11 @@ class InventoryRepository extends BaseRepository
             ]))
 
             {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+
+                event(new InventoryUpdated($auth_link, $asset_link));
+
                 return $inventory;
             }
 
@@ -125,6 +143,10 @@ class InventoryRepository extends BaseRepository
         return DB::transaction(function () use ($inventory) {
 
             if ($inventory->forceDelete()) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+
+                event(new InventoryPermanentlyDeleted($auth_link, $inventory->name));
+
                 return $inventory;
             }
 
@@ -145,6 +167,11 @@ class InventoryRepository extends BaseRepository
         }
 
         if ($inventory->restore()) {
+            $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+            $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+            
+            event(new InventoryRestored(Auth::user()->full_name, $asset_link));
+
             return $inventory;
         }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Client;
 
+# Facades
+use Auth;
 # Requests
 use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Client\ManageClientRequest;
@@ -13,7 +15,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Client\Client;
 # Repository
 use App\Repositories\Backend\Client\ClientRepository;
-
+# Event
+use App\Events\Backend\Client\ClientDeleted;
 
 class ClientController extends Controller
 {
@@ -121,9 +124,15 @@ class ClientController extends Controller
      */
     public function destroy(Client $client, ManageClientRequest $request)
     {
-        $this->clientRepository->deleteById($client->id);
+        if ($this->clientRepository->deleteById($client->id)) 
+        {
+            $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+            $asset_link = "<a href='".route('admin.client.deleted-profile', $client->id)."'>".$client->name.'</a>';
 
-        return redirect()->back()->withFlashSuccess(__('alerts.backend.clients.deleted', ['client' => $client->name]));
+            event(new ClientDeleted($auth_link, $asset_link));
+
+            return redirect()->back()->withFlashSuccess(__('alerts.backend.clients.deleted', ['client' => $client->name]));
+        }
 
         // return redirect()->route('admin.client.deleted')->withFlashSuccess(__('alerts.backend.clients.deleted', ['client' => $client->name]));
     }

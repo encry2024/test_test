@@ -27,7 +27,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>{{ __('labels.backend.inventories.table.id') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.name') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.price_per_unit') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.stocks') }}</th>
@@ -40,7 +39,6 @@
                             <tbody>
                             @foreach ($inventories as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }} - {{ $item->distributor_id == 0 ? 'N/A' : $item->distributor->name }}</td>
                                     <td>PHP {{ number_format($item->price_per_unit, 2) }}</td>
                                     <td>{{ number_format($item->stocks, 2) }} {{ $item->unit_type->name }}</td>
@@ -69,4 +67,48 @@
             </div><!--row-->
         </div><!--card-body-->
     </div><!--card-->
+
+    <form method="POST" class="modal fade in" tabindex="-1" role="dialog" id="add-item-stocks">
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item Stocks</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mt-4 mb-4">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="edit-stocks" class="col-md-3 form-control-label">Stocks</label>
+
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="edit-stocks" name="stocks" required min="0">
+                                </div><!--col-->
+                            </div><!--form-group-->
+                        </div><!--col-->
+                    </div><!--row-->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function getUnitType(id, stocks, description) {
+            let url = "{{ route('admin.inventory.update.stocks', ':item_id') }}";
+                url = url.replace(':item_id', id);
+
+            document.getElementById('edit-stocks').value = stocks;
+
+            $("#add-item-stocks").attr('action', url);
+        }
+    </script>
 @endsection

@@ -92,7 +92,11 @@ return [
             'view'      =>  'View :inventory',
             'deleted'   =>  'Deleted Items',
 
-            'management'    =>  'Inventory Management',
+            'management'              =>  'Inventory Management',
+            'unit_types'    =>  [
+                'management'    =>  'Inventory Unit Type',
+                'list'          =>  'Registered Unit Types'
+            ],
 
             'table' =>  [
                 'id'                    =>  'ID',
@@ -139,6 +143,7 @@ return [
             'view'      =>  'View :client',
             'deleted'   =>  'Deleted Clients',
             'order'     =>  'Client Order',
+            'deleted-profile'   =>  'Deleted Profile',
 
             'management'    =>  'Client Management',
 

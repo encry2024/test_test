@@ -12,7 +12,7 @@
 
 @section('content')
     {!! $rows->render('log-viewer::_pagination.bootstrap-4') !!}
-
+    
     <div class="card">
         <div class="card-header">
             {{ __('menus.backend.log-viewer.logs') }}

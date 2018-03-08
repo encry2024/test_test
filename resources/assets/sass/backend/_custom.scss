@@ -3,6 +3,14 @@
   color: #fff !important;
 }
 
+.todo-bg-danger {
+  background-color: #b10303;
+}
+
+a.todo-bg-danger:hover, a.todo-bg-danger:focus, button.todo-bg-danger:hover, button.todo-bg-danger:focus {
+  background-color: #7f0202 !important;
+}
+
 body {
   font-size: 12px;
   font-weight: 600;

@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Distributor\Distributor;
 # Repository
 use App\Repositories\Backend\Distributor\DistributorRepository;
+# Events
+use App\Events\Backend\Distributor\DistributorDeleted;
 
 class DistributorController extends Controller
 {
@@ -116,7 +118,11 @@ class DistributorController extends Controller
     {
         $this->distributorRepository->deleteById($distributor->id);
 
+        $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+        $asset_link = "<a href='".route('admin.distributor.show', $distributor->id)."'>".$distributor->name.'</a>';
+
+        event(new DistributorDeleted($auth_link, $asset_link));
+
         return redirect()->back()->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
-        // return redirect()->route('admin.supplier.deleted')->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
     }
 }

@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h4 class="card-title mb-0">
-                        {{ __('labels.backend.clients.management') }}
+                         @if ($client->trashed())<span class="badge badge-danger">DELETED</span> @endif {{ __('labels.backend.clients.management') }}
                         <small class="text-muted">{{ __('labels.backend.clients.view', ['client' => $client->name]) }}</small>
                     </h4>
                 </div><!--col-->

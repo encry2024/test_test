@@ -27,7 +27,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>{{ __('labels.backend.clients.table.id') }}</th>
                                 <th>{{ __('labels.backend.clients.table.name') }}</th>
                                 <th>{{ __('labels.backend.clients.table.contact_person_first_name') }}</th>
                                 <th>{{ __('labels.backend.clients.table.contact_person_last_name') }}</th>
@@ -41,7 +40,6 @@
                             <tbody>
                             @foreach ($clients as $client)
                                 <tr>
-                                    <td>{{ $client->id }}</td>
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->contact_person_first_name }}</td>
                                     <td>{{ $client->contact_person_last_name }}</td>

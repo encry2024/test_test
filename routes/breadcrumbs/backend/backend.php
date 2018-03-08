@@ -9,3 +9,5 @@ require __DIR__.'/log-viewer.php';
 require __DIR__.'/general/client.php';
 require __DIR__.'/general/distributor.php';
 require __DIR__.'/general/inventory.php';
+require __DIR__.'/general/unit_type.php';
+require __DIR__.'/general/transaction.php';

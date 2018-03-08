@@ -9,11 +9,16 @@
 namespace App\Repositories\Backend\Client;
 
 use Illuminate\Support\Facades\DB;
+use Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Client\Client;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 
+use App\Events\Backend\Client\ClientCreated;
+use App\Events\Backend\Client\ClientUpdated;
+use App\Events\Backend\Client\ClientRestored;
+use App\Events\Backend\Client\ClientPermanentlyDeleted;
 /**
  * Class ClientRepository.
  */
@@ -74,6 +79,11 @@ class ClientRepository extends BaseRepository
             ]);
 
             if ($client) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.client.show', $client->id)."'>".$client->name.'</a>';
+
+                event(new ClientCreated($auth_link, $asset_link));
+
                 return $client;
             }
 
@@ -100,6 +110,11 @@ class ClientRepository extends BaseRepository
             ]))
 
             {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.client.show', $client->id)."'>".$client->name.'</a>';
+
+                event(new ClientUpdated(Auth::user()->full_name, $asset_link));
+
                 return $client;
             }
 
@@ -122,6 +137,10 @@ class ClientRepository extends BaseRepository
         return DB::transaction(function () use ($client) {
 
             if ($client->forceDelete()) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+
+                event(new ClientPermanentlyDeleted($auth_link, $client->name));
+
                 return $client;
             }
 
@@ -142,6 +161,11 @@ class ClientRepository extends BaseRepository
         }
 
         if ($client->restore()) {
+            $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+            $asset_link = "<a href='".route('admin.client.show', $client->id)."'>".$client->name.'</a>';
+
+            event(new ClientRestored($auth_link, $asset_link));
+
             return $client;
         }
 

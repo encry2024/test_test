@@ -18,6 +18,19 @@ trait InventoryAttribute
     /**
      * @return string
      */
+    public function getRestockButtonAttribute()
+    {
+        if (auth()->user()->can('edit inventory'))
+            return '<a href="#"
+             onclick="getUnitType('.$this->id.',\''.$this->stocks.'\')"
+             data-toggle="modal" data-target="#add-item-stocks" class="btn btn-success"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Add Stocks"></i></a>';
+         else
+            return '';
+    }
+
+    /**
+     * @return string
+     */
     public function getEditButtonAttribute()
     {
         if (auth()->user()->can('edit inventory'))
@@ -48,7 +61,11 @@ trait InventoryAttribute
     public function getDeletePermanentlyButtonAttribute()
     {
         if (auth()->user()->can('delete inventory')) {
-            return '<a href="' . route('admin.inventory.delete-permanently', $this) . '" name="confirm_inventory" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
+            return '<a href="' . route('admin.inventory.delete-permanently', $this) . '" 
+            data-trans-button-cancel="Cancel"
+            data-trans-button-confirm="Yes, Delete Permanently"
+            data-trans-title="Are you sure you want to delete this item permanently?"
+            name="confirm_item" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
         }
 
         return '';
@@ -60,7 +77,11 @@ trait InventoryAttribute
     public function getRestoreButtonAttribute()
     {
         if (auth()->user()->can('restore inventory'))
-            return '<a href="'.route('admin.inventory.restore', $this).'" name="confirm_inventory" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Inventory"></i></a> ';
+            return '<a href="'.route('admin.inventory.restore', $this).'" 
+            data-trans-button-cancel="Cancel"
+            data-trans-button-confirm="Yes, Restore"
+            data-trans-title="Are you sure you want to restore this item?"
+        name="confirm_item" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Inventory"></i></a> ';
         else
             return '';
     }
@@ -80,6 +101,7 @@ trait InventoryAttribute
 
         return '
             <div class="btn-group btn-group-sm" role="group" aria-label="Inventory Actions">
+            '.$this->restock_button.'
             '.$this->show_button.'
             '.$this->edit_button.'
             '.$this->delete_button.'

@@ -31,3 +31,8 @@ Breadcrumbs::register('admin.client.deleted', function ($breadcrumbs) {
     $breadcrumbs->parent('admin.client.index');
     $breadcrumbs->push(__('labels.backend.clients.deleted'), route('admin.client.deleted'));
 });
+
+Breadcrumbs::register('admin.client.deleted-profile', function ($breadcrumbs, $client) {
+    $breadcrumbs->parent('admin.client.index');
+    $breadcrumbs->push(__('labels.backend.clients.deleted-profile', ['client' => $client->name]), route('admin.client.deleted-profile', $client));
+});

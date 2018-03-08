@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Inventory;
 
+use Auth;
 # Controllers
 use App\Http\Controllers\Controller;
 # Requests
@@ -9,11 +10,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Inventory\ManageInventoryRequest;
 use App\Http\Requests\Backend\Inventory\UpdateInventoryRequest;
 use App\Http\Requests\Backend\Inventory\StoreInventoryRequest;
+use App\Http\Requests\Backend\Inventory\DeleteInventoryRequest;
+# Repository
 use App\Repositories\Backend\Inventory\InventoryRepository;
 # Models
 use App\Models\Inventory\Inventory;
 use App\Models\Distributor\Distributor;
 use App\Models\UnitType\UnitType;
+# Events
+use App\Events\Backend\Inventory\InventoryDeleted;
+use App\Events\Backend\Inventory\InventoryRestocked;
 
 class InventoryController extends Controller
 {
@@ -128,12 +134,33 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inventory $inventory, ManageInventoryRequest $request)
+    public function destroy(Inventory $inventory, DeleteInventoryRequest $request)
     {
         $this->inventoryRepository->deleteById($inventory->id);
+
+        $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+        $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+
+        event(new InventoryDeleted($auth_link, $asset_link));
 
         return redirect()->back()->withFlashSuccess(__('alerts.backend.inventories.deleted', ['item' => $inventory->name]));
 
         // return redirect()->route('admin.inventory.deleted')->withFlashSuccess(__('alerts.backend.inventorys.deleted', ['inventory' => $inventory->name]));
+    }
+
+    public function addStocks(Request $request, Inventory $inventory)
+    {
+        $requested_stock = $request->stocks;
+        $current_stock   = $inventory->stocks;
+        $total_stocks    = $requested_stock + $current_stock;
+
+        if ($inventory->update(['stocks' => $total_stocks])) {
+            $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+            $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+
+            event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
+        }
+
+        return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name);
     }
 }

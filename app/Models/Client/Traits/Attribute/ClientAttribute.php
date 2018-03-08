@@ -15,6 +15,11 @@ trait ClientAttribute
         return '<a href="'.route('admin.client.show', $this).'" class="btn btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'"></i></a>';
     }
 
+    public function getTransactionButtonAttribute()
+    {
+        return '<a href="'.route('admin.client.transaction.create', $this).'" class="btn btn-success"><i class="fa fa-truck" data-toggle="tooltip" data-placement="top" title="Make Transaction"></i></a>';
+    }
+
     /**
      * @return string
      */
@@ -56,7 +61,11 @@ trait ClientAttribute
     public function getDeletePermanentlyButtonAttribute()
     {
         if (auth()->user()->can('force delete client'))
-            return '<a href="'.route('admin.client.delete-permanently', $this).'" name="confirm_client" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
+            return '<a href="'.route('admin.client.delete-permanently', $this).'"
+            data-trans-button-cancel="Cancel"
+            data-trans-button-confirm="Yes, Delete Permanently"
+            data-trans-title="Are you sure you want to delete this data permanently?"
+            name="confirm_item" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
         else
             return '';
     }
@@ -67,7 +76,11 @@ trait ClientAttribute
     public function getRestoreButtonAttribute()
     {
         if (auth()->user()->can('restore client'))
-            return '<a href="'.route('admin.client.restore', $this).'" name="confirm_client" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Client"></i></a> ';
+            return '<a href="'.route('admin.client.restore', $this).'" 
+            data-trans-button-cancel="Cancel"
+            data-trans-button-confirm="Yes, Restore"
+            data-trans-title="Are you sure you want to restore this data?"
+            name="confirm_item" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Client"></i></a> ';
         else
             return '';
     }
@@ -87,6 +100,7 @@ trait ClientAttribute
 
         return '
             <div class="btn-group btn-group-sm" role="group" aria-label="Client Actions">
+            '.$this->transaction_button.'
             '.$this->show_button.'
             '.$this->edit_button.'
             '.$this->delete_button.'

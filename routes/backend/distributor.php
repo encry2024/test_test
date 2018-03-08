@@ -8,6 +8,7 @@ Route::group([
 ], function () {
 
     Route::get('distributor/deleted', 'DistributorStatusController@getDeleted')->name('distributor.deleted');
+
     Route::get('distributor/{distributor}/item/cart', 'DistributorController@showCart')->name('distributor.cart');
 
     Route::resource('distributor', 'DistributorController');

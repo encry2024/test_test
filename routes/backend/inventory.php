@@ -7,8 +7,19 @@ Route::group([
     'namespace'  => 'Inventory',
 ], function () {
 
+    Route::group([
+        'namespace' =>  'UnitType',
+        'prefix'    =>  'inventory',
+        'as'        =>  'inventory.'
+    ], function () {
+        Route::resource('unit_type', 'UnitTypeController');
+    });
+
     Route::get('inventory/deleted', 'InventoryStatusController@getDeleted')->name('inventory.deleted');
+    
     Route::get('inventory/{inventory}/item/cart', 'InventoryController@showCart')->name('inventory.cart');
+
+    Route::patch('inventory/{inventory}/restock', 'InventoryController@addStocks')->name('inventory.update.stocks');
 
     Route::resource('inventory', 'InventoryController');
 

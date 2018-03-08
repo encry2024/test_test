@@ -31,7 +31,9 @@ return [
             'create'    =>  'Create Item',
             'edit'      =>  'Edit Item',
             'deleted'   =>  'Deleted Items',
-            'main'      =>  'Inventory'
+            'main'      =>  'Inventory',
+
+            'create_unit_type'  =>  'Create Unit Type'
         ],
 
         'distributors'  =>  [

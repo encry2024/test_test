@@ -49,6 +49,9 @@ class PermissionRoleTableSeeder extends Seeder
         Permission::create(['name' => 'delete client']);
         Permission::create(['name' => 'force delete client']);
         Permission::create(['name' => 'restore client']);
+        // Create Permissions - View, Create - ToDo
+        Permission::create(['name' => 'view todo']);
+        Permission::create(['name' => 'create todo']);
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
@@ -72,6 +75,9 @@ class PermissionRoleTableSeeder extends Seeder
         $admin->givePermissionTo('delete client');
         $admin->givePermissionTo('force delete client');
         $admin->givePermissionTo('restore client');
+        // ADMIN HAS ALL THE PERMISSIONS FOR MANAGING TODOS
+        $admin->givePermissionTo('view todo');
+        $admin->givePermissionTo('create todo');
 
         // Assign Permissions to other Roles
         $executive->givePermissionTo('view backend');

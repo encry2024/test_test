@@ -54,7 +54,7 @@ trait DistributorAttribute
                  data-method="delete"
                  data-trans-button-cancel="' . __('buttons.general.cancel') . '"
                  data-trans-button-confirm="' . __('buttons.general.crud.delete') . '"
-                 data-trans-title="' . __('strings.backend.general.are_you_sure') . '"k
+                 data-trans-title="' . __('strings.backend.general.are_you_sure') . '"
                  class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="' . __('buttons.general.crud.delete') . '"></i></a> ';
         else
             return '';
@@ -66,7 +66,13 @@ trait DistributorAttribute
     public function getDeletePermanentlyButtonAttribute()
     {
         if (auth()->user()->can('force delete distributor'))
-            return '<a href="'.route('admin.distributor.delete-permanently', $this).'" name="confirm_distributor" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
+            return '<a href="'.route('admin.distributor.delete-permanently', $this).'" 
+                    name="confirm_item"
+                    data-trans-button-cancel="Cancel"
+                    data-trans-button-confirm="Yes, Delete"
+                    data-trans-title="Are you sure you want to delete "'. $this->name .'" Permanently?"
+                    class="btn btn-danger">
+                    <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
         else
             return '';
     }
@@ -77,7 +83,11 @@ trait DistributorAttribute
     public function getRestoreButtonAttribute()
     {
         if (auth()->user()->can('restore distributor'))
-            return '<a href="'.route('admin.distributor.restore', $this).'" name="confirm_distributor" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Distributor"></i></a> ';
+            return '<a href="'.route('admin.distributor.restore', $this).'" name="confirm_item"
+            data-trans-button-cancel="Cancel"
+            data-trans-button-confirm="Yes, Restore"
+            data-trans-title="Are you sure you want to restore this data?"
+            class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Distributor"></i></a> ';
         else
             return '';
     }

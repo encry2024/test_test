@@ -51,11 +51,11 @@
                                 @endif
                             </a>
                         </li>
-                        {{--<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link {{ active_class(Active::checkUriPattern('admin/auth/role*')) }}" href="{{ route('admin.auth.role.index') }}">
                                 {{ __('labels.backend.access.roles.management') }}
                             </a>
-                        </li>--}}
+                        </li>
                     </ul>
                 </li>
             @endif
@@ -65,7 +65,7 @@
                     <i class="icon-list"></i> {{ __('menus.backend.log-viewer.main') }}
                 </a>
 
-                <ul class="nav-dropdown-items">
+                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer')) }}" href="{{ route('log-viewer::dashboard') }}">
                             {{ __('menus.backend.log-viewer.dashboard') }}
@@ -75,9 +75,9 @@
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer/logs*')) }}" href="{{ route('log-viewer::logs.list') }}">
                             {{ __('menus.backend.log-viewer.logs') }}
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
-            </li>--}}
+            </li>
         </ul>
     </nav>
 </div><!--sidebar-->
