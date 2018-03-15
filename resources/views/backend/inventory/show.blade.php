@@ -13,7 +13,7 @@
                 <div class="col-sm-12">
                     <h4 class="card-title mb-0">
                         {{ __('labels.backend.inventories.management') }}
-                        <small class="text-muted">{{ __('labels.backend.inventories.view', ['item' => $item->name]) }}</small>
+                        <small class="text-muted">{{ __('labels.backend.inventories.view', ['inventory' => $item->name]) }}</small>
                     </h4>
                 </div><!--col-->
             </div><!--row-->

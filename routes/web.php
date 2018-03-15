@@ -30,4 +30,5 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      * These routes can not be hit if the password is expired
      */
     include_route_files(__DIR__.'/backend/');
+
 });

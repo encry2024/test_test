@@ -28,4 +28,7 @@ Route::group([
         Route::get('restore', 'InventoryStatusController@restore')->name('inventory.restore');
     });
 
+    # API
+    Route::post('inventory/get/item', 'InventoryController@getItem')->name('inventory.get_item');
+
 });

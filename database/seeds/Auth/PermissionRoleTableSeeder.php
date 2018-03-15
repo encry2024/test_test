@@ -52,6 +52,9 @@ class PermissionRoleTableSeeder extends Seeder
         // Create Permissions - View, Create - ToDo
         Permission::create(['name' => 'view todo']);
         Permission::create(['name' => 'create todo']);
+        // Create Permissions - View, Create - Transaction
+        Permission::create(['name' => 'view transaction']);
+        Permission::create(['name' => 'create transaction']);
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
@@ -78,6 +81,9 @@ class PermissionRoleTableSeeder extends Seeder
         // ADMIN HAS ALL THE PERMISSIONS FOR MANAGING TODOS
         $admin->givePermissionTo('view todo');
         $admin->givePermissionTo('create todo');
+        // ADMIN HAS ALL THE PERMISSIONS FOR MANAGING TRANSACTIONS
+        $admin->givePermissionTo('view transaction');
+        $admin->givePermissionTo('create transaction');
 
         // Assign Permissions to other Roles
         $executive->givePermissionTo('view backend');

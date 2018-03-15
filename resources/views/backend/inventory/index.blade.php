@@ -38,10 +38,26 @@
 
                             <tbody>
                             @foreach ($inventories as $item)
-                                <tr>
-                                    <td>{{ $item->name }} - {{ $item->distributor_id == 0 ? 'N/A' : $item->distributor->name }}</td>
+                                <tr
+                                @if ($item->stocks == 0)
+                                    class="row-bg-danger text-white"
+                                @elseif ($item->stocks <= $item->critical_stocks_level)
+                                    class="bg-warning" style="color: black;"
+                                @endif
+                                >
+                                    <td>
+                                        @if (count($item->distributor))
+                                            @if ($item->distributor->trashed())
+                                                {{ $item->name }} - N/A
+                                            @else
+                                                {{ $item->name }} - {{ $item->distributor->name }}
+                                            @endif
+                                        @else
+                                            {{ $item->name }} - N/A
+                                        @endif
+                                    </td>
                                     <td>PHP {{ number_format($item->price_per_unit, 2) }}</td>
-                                    <td>{{ number_format($item->stocks, 2) }} {{ $item->unit_type->name }}</td>
+                                    <td>{{ $item->stocks }} {{ $item->unit_type->name }}</td>
                                     <td>{{ $item->created_at->diffForHumans() }}</td>
                                     <td>{{ $item->updated_at->diffForHumans() }}</td>
                                     <td>{!! $item->action_buttons !!}</td>

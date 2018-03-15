@@ -2,12 +2,30 @@
 
 namespace App\Http\Controllers\Backend\Transaction;
 
+# Facades
+use Cookie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+# Models
 use App\Models\Client\Client;
+use App\Models\Inventory\Inventory;
+use App\Models\Transaction\Transaction;
+# Repository
+use App\Repositories\Backend\Transaction\TransactionRepository;
+# Events
+use App\Events\Backend\Transaction\TransactionDeleted;
+# Requests
+use App\Http\Requests\Backend\Transaction\StoreTransactionRequest;
 
 class TransactionController extends Controller
 {
+    protected $transactionRepository;
+
+    public function __construct(TransactionRepository $transactionRepository)
+    {
+        $this->transactionRepository = $transactionRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +41,18 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Client $client)
+    public function create(Client $client, Request $request)
     {
-        return view('backend.transaction.create')->withClient($client);
+        if ($request->has('inventory')) {
+            $orders = array();
+            $inventories = Inventory::all();
+            
+            return view('backend.transaction.create')->withClient($client)->withInventories($inventories);
+        }
+
+        $inventories = Inventory::all();
+
+        return view('backend.transaction.create')->withClient($client)->withInventories($inventories);
     }
 
     /**
@@ -34,9 +61,18 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTransactionRequest $request)
     {
-        //
+        $this->transactionRepository->create($request->only(
+            'orders',
+            'client'
+        ));
+
+        /*return json_encode($this->transactionRepository->create($request->only(
+            'orders',
+            'client'
+        )));*/
+        return json_encode('Transaction was successfully created.');
     }
 
     /**

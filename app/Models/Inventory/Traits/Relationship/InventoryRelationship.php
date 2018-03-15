@@ -4,6 +4,7 @@ namespace App\Models\Inventory\Traits\Relationship;
 
 use App\Models\Distributor\Distributor;
 use App\Models\UnitType\UnitType;
+use App\Models\Client\Client;
 
 /**
  * Trait InventoryRelationship.
@@ -15,7 +16,7 @@ trait InventoryRelationship
      */
     public function distributor()
     {
-        return $this->belongsTo(Distributor::class);
+        return $this->belongsTo(Distributor::class)->withTrashed();
     }
 
     /**
@@ -24,5 +25,10 @@ trait InventoryRelationship
     public function unit_type()
     {
         return $this->belongsTo(UnitType::class);
+    }
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
     }
 }

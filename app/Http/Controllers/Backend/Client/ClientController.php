@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Client;
 
 # Facades
 use Auth;
+use DB;
 # Requests
 use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Client\ManageClientRequest;
@@ -13,6 +14,7 @@ use App\Http\Requests\Backend\Client\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 # Models
 use App\Models\Client\Client;
+use App\Models\ClientTransaction\ClientTransaction;
 # Repository
 use App\Repositories\Backend\Client\ClientRepository;
 # Event
@@ -81,7 +83,17 @@ class ClientController extends Controller
      */
     public function show(Client $client, ManageClientRequest $request)
     {
-        return view('backend.client.show')->withClient($client);
+        $transactions = DB::table('client_transaction')
+        ->leftJoin('transactions', function($join) {
+            $join->on('client_transaction.transaction_id', '=', 'transactions.id');
+        })
+        ->leftJoin('inventories', function($join) {
+            $join->on('client_transaction.inventory_id', '=', 'inventories.id');
+        })
+        ->where('transactions.client_id', '=', $client->id)
+        ->get();
+
+        return view('backend.client.show')->withClient($client)->withTransactions($transactions);
     }
 
     /**

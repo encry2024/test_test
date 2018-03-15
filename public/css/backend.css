@@ -18782,6 +18782,10 @@ hr.transparent {
   background-color: #b10303;
 }
 
+.row-bg-danger {
+  background-color: #b10303;
+}
+
 a.todo-bg-danger:hover,
 a.todo-bg-danger:focus,
 button.todo-bg-danger:hover,
@@ -18836,7 +18840,7 @@ label {
 
 .notific8-notification.family-materialish.lilrobot,
 .notific8-notification.materialish.lilrobot {
-  background-color: #28a745 !important;
+  background-color: #b10303 !important;
   color: #eee;
 }
 

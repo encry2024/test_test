@@ -28,6 +28,25 @@ function addDeleteForms() {
  * Place any jQuery/helper plugins in here.
  */
 $(function(){
+    $("select").chosen({ width: '100%' });
+
+    const numericField  = document.getElementsByClassName('numeric-input');
+
+    for (let elementIndex=0; elementIndex<numericField.length; elementIndex++) {
+        new Cleave(numericField[elementIndex], {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    }
+
+    Array.prototype.contains = function (inventory) {
+        for (item in this) {
+            if (this[item] == inventory) return true;
+        }
+
+        return false;
+    }
+
     /**
      * Add the data-method="delete" forms to all delete links
      */

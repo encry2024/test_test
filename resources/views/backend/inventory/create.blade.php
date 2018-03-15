@@ -79,14 +79,14 @@
                         ->for('stocks') }}
 
                         <div class="input-group col-md-10">
-                            <span class="input-group-prepend">
-                                <select name="unit_type" id="unit-type-dropdown" class="custom-select">
-                                    <option selected disabled>-- Select Unit Type --</option>
+                            <div class="input-group-prepend">
+                                <select name="unit_type" id="unit-type-dropdown" class="form-control chosen-select">
+                                    <option value=""></option>
                                     @foreach ($unit_types as $unit_type)
-                                        <option value="{{ $unit_type->id }}">{{ $unit_type->name }}</option>
+                                        <option value="{{ $unit_type->id }}">{{ $unit_type->name }} - {{ $unit_type->description }}</option>
                                     @endforeach
                                 </select>
-                            </span>
+                            </div>
                             {{ html()->text('stocks')
                                 ->class('form-control numeric-input')
                                 ->placeholder(__('validation.attributes.backend.inventory.stocks'))

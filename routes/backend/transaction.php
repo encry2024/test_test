@@ -10,5 +10,6 @@ Route::group([
 ], function () {
 
     Route::get('{client}/transaction/create', 'TransactionController@create')->name('transaction.create');
+    Route::post('transaction/create', 'TransactionController@store')->name('transaction.store');
 
 });

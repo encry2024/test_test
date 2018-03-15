@@ -14,6 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Client\Client;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
+use App\Models\Auth\User;
 
 use App\Events\Backend\Client\ClientCreated;
 use App\Events\Backend\Client\ClientUpdated;
@@ -81,6 +82,17 @@ class ClientRepository extends BaseRepository
             if ($client) {
                 $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
                 $asset_link = "<a href='".route('admin.client.show', $client->id)."'>".$client->name.'</a>';
+
+                $user = new User();
+                $user->first_name = $client->contact_person_first_name;
+                $user->last_name  = $client->contact_person_last_name;
+                $user->email      = $client->contact_person_email;
+                $user->password   = bcrypt('cmms123');
+                $user->active     = 1;
+                $user->confirmed  = 1;
+                $user->timezone   = 'Asia/Manila';
+                $user->avatar_type= 'gravatar';
+                $user->save();
 
                 event(new ClientCreated($auth_link, $asset_link));
 

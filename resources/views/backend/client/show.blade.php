@@ -24,11 +24,19 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-expanded="true"><i class="fa fa-user"></i> {{ __('labels.backend.clients.tabs.titles.overview') }}</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#transaction" role="tab" aria-controls="transaction" aria-expanded="true"><i class="fa fa-file"></i> Transaction</a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
                             @include('backend.client.show.tabs.overview')
+                        </div><!--tab-->
+
+                        <div class="tab-pane" id="transaction" role="tabpanel" aria-expanded="true">
+                            @include('backend.client.show.tabs.transaction')
                         </div><!--tab-->
                     </div><!--tab-content-->
                 </div><!--col-->

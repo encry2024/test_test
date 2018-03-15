@@ -8,7 +8,15 @@
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.distributor') }}</th>
-                <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a></td>
+                @if (count($item->distributor))
+                    @if ($item->distributor->trashed())
+                        <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a> <span style="font-size: 10px;" class="badge badge-danger">Deleted | Recoverable</span></td>
+                    @else
+                        <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a></td>
+                    @endif
+                @else
+                    <td><span class="badge badge-danger">Permanently Deleted</span></td>
+                @endif
             </tr>
 
             <tr>

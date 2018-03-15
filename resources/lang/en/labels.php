@@ -149,7 +149,7 @@ return [
 
             'table' =>  [
                 'id'                                =>  'ID',
-                'name'                              =>  'Name',
+                'name'                              =>  'Company Name',
                 'contact_person_first_name'         =>  'Contact Person First Name',
                 'contact_person_last_name'          =>  'Contact Person Last Name',
                 'contact_person_email'              =>  'E-mail',
@@ -169,7 +169,7 @@ return [
                 'content'   =>  [
                     'overview'  =>  [
                         'id'                                =>  'ID',
-                        'name'                              =>  'Name',
+                        'name'                              =>  'Company Name',
                         'contact_person_first_name'         =>  'Contact Person First Name',
                         'contact_person_last_name'          =>  'Contact Person Last Name',
                         'contact_person_email'              =>  'E-mail',
@@ -182,7 +182,8 @@ return [
                 ]
             ],
 
-            'show'  =>  'Show :client'
+            'show'  =>  ':client',
+            'transact_to'   =>  ':client'
         ],
 
         'access' => [

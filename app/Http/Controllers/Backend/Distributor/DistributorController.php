@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Distributor;
 
+use Auth;
 # Requests
 use App\Http\Requests\Backend\Distributor\ManageDistributorRequest;
 use App\Http\Requests\Backend\Distributor\StoreDistributorRequest;

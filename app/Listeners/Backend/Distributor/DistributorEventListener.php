@@ -36,7 +36,7 @@ class DistributorEventListener
      */
     public function onPermanentlyDeleted($event)
     {
-        \Log::info($event->user.' Permanently Deleted Distributor '. $event->distributorDeleted);
+        \Log::info($event->user.' Permanently Deleted Distributor '. $event->distributor);
     }
 
     /**

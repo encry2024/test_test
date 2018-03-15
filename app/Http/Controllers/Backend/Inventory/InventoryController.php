@@ -90,6 +90,9 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory, ManageInventoryRequest $request)
     {
+        /*$inventory->with(['distributor' => function($query) {
+            $query->withTrashed();
+        }])->withTrashed()*/
         return view('backend.inventory.show')->withItem($inventory);
     }
 
@@ -162,5 +165,12 @@ class InventoryController extends Controller
         }
 
         return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name);
+    }
+
+    public function getItem(Request $request)
+    {
+        $inventories = Inventory::with(['distributor', 'unit_type'])->where('id', $request->item_id)->first();
+
+        return json_encode($inventories);
     }
 }

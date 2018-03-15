@@ -120,9 +120,9 @@ return [
 
         'backend' => [
             'client'  =>  [
-                'name'                          =>  'Name',
-                'contact_person_first_name'     => 'Contact Person First Name',
-                'contact_person_last_name'      => 'Contact Person Last Name',
+                'name'                          =>  'Company Name',
+                'contact_person_first_name'     =>  'Contact Person First Name',
+                'contact_person_last_name'      =>  'Contact Person Last Name',
                 'contact_person_email'          =>  'Contact Person E-mail',
                 'contact_person_contact_number' =>  'Contact Person Number',
                 'address'                       =>  'Address'
