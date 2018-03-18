@@ -33,6 +33,16 @@ return [
     ],
 
     'backend' => [
+        'transactions'  =>  [
+            'table' =>  [
+                'transaction_id'    =>  'Transaction ID',
+                'client'            =>  'Client Name',
+                'created_by'        =>  'Created By',
+                'status'            =>  'Transaction Status',
+                'total'             =>  'transaction total|transactions total',
+            ]
+        ],
+
         'distributors'  =>  [
             'create'    =>  'Create Distributor',
             'edit'      =>  'Edit :distributor',

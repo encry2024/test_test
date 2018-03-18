@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Inventory;
+namespace App\Http\Requests\Backend\DistributorInventory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreInventoryRequest extends FormRequest
+class StoreDistributorInventoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class StoreInventoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'distributor'             => 'required',
-            'inventory'               => 'required',
-            'price_per_unit'          => 'max:20',
-            'unit_type'               => 'required',
-            'critical_stocks_level'   => 'max:191'
+            'distributor'   =>  'required',
+            'inventory'     =>  'required|unique:distributor_inventory,distributor_id,'.$request->distributor
         ];
     }
 }

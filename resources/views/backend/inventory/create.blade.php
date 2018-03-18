@@ -29,23 +29,6 @@
             <div class="row mt-4 mb-4">
                 <div class="col">
                     <div class="form-group row">
-                        {{ html()->label(__('validation.attributes.backend.inventory.name'))
-                        ->class('col-md-2 form-control-label')
-                        ->for('name') }}
-
-                        <div class="col-md-10">
-                            {{
-                                html()->text('name')
-                                ->class('form-control')
-                                ->placeholder(__('validation.attributes.backend.inventory.name'))
-                                ->attribute('maxlength', 191)
-                                ->required()
-                                ->autofocus()
-                            }}
-                        </div><!--col-->
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.inventory.distributor'))->class('col-md-2 form-control-label')->for('distributor') }}
 
                         <div class="col-md-10">
@@ -54,6 +37,15 @@
                                 @foreach ($distributors as $distributor)
                                     <option value="{{ $distributor->id }}">{{ $distributor->name }}</option>
                                 @endforeach
+                            </select>
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.inventory.name'))->class('col-md-2 form-control-label')->for('inventory') }}
+
+                        <div class="col-md-10">
+                            <select name="inventory" id="inventory-dropdown" class="form-control chosen-select">
                             </select>
                         </div><!--col-->
                     </div><!--form-group-->
@@ -119,3 +111,38 @@
     </div><!--card-->
 {{ html()->form()->close() }}
 @endsection
+
+@push('after-scripts')
+<script>
+    $(document).ready(function() {
+        $('#distributor-dropdown').on('change', function () {
+           const distributor    = $('#distributor-dropdown');
+           const item_container = $('#inventory-dropdown');
+           let html             = "";
+
+           item_container.empty();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('admin.distributor.get_inventory') }}",
+                data: {_token: '{{ csrf_token() }}', distributor_id: distributor.val()},
+                dataType: 'JSON',
+                success: function(data) {
+                    html = '<option value=""></option>';
+                    for (let i=0; i < Object.keys(data.inventories).length ; i++) {
+                        let item = data.inventories[i];
+
+                        html += '<option value="'+ item.id +'">'+ item.name +'</option>';
+                    }
+                    item_container.append(html);
+                },
+                complete: function() {
+                    item_container.chosen();
+                    item_container.trigger('chosen:updated');
+                }
+            })
+
+        });
+    })
+</script>
+@endpush

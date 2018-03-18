@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Backend\Transaction;
 use Cookie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
 # Models
 use App\Models\Client\Client;
 use App\Models\Inventory\Inventory;
@@ -15,6 +16,7 @@ use App\Repositories\Backend\Transaction\TransactionRepository;
 # Events
 use App\Events\Backend\Transaction\TransactionDeleted;
 # Requests
+use App\Http\Requests\Backend\Transaction\ManageTransactionRequest;
 use App\Http\Requests\Backend\Transaction\StoreTransactionRequest;
 
 class TransactionController extends Controller
@@ -31,9 +33,9 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ManageTransactionRequest $request)
     {
-        //
+        return view('backend.transaction.index')->withTransactions($this->transactionRepository->getPaginatedTransaction());
     }
 
     /**
@@ -43,14 +45,7 @@ class TransactionController extends Controller
      */
     public function create(Client $client, Request $request)
     {
-        if ($request->has('inventory')) {
-            $orders = array();
-            $inventories = Inventory::all();
-            
-            return view('backend.transaction.create')->withClient($client)->withInventories($inventories);
-        }
-
-        $inventories = Inventory::all();
+        $inventories = Inventory::where('stocks', '!=', 0)->get();
 
         return view('backend.transaction.create')->withClient($client)->withInventories($inventories);
     }
@@ -72,7 +67,9 @@ class TransactionController extends Controller
             'orders',
             'client'
         )));*/
-        return json_encode('Transaction was successfully created.');
+        Session::flash('flash_success', 'Transaction was successfully created.');
+
+        return json_encode(route('admin.client.show', $request->client));
     }
 
     /**
@@ -81,9 +78,9 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaction $transaction)
     {
-        //
+        return view('backend.transaction.show')->withTransaction($transaction);
     }
 
     /**

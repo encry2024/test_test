@@ -75,10 +75,8 @@ class InventoryRepository extends BaseRepository
     public function create(array $data) : Inventory
     {
         return DB::transaction(function () use ($data) {
-            $inventory = parent::create([
-                'distributor_id'        =>  $data['distributor'],
+            $inventory = parent::updateById($data['inventory'], [
                 'unit_type_id'          =>  $data['unit_type'],
-                'name'                  =>  strtoupper($data['name']),
                 'stocks'                =>  str_replace(',','',$data['stocks']),
                 'critical_stocks_level' =>  str_replace(',','',$data['critical_stocks_level']),
                 'price_per_unit'        =>  str_replace(',','',$data['price_per_unit'])
@@ -88,12 +86,12 @@ class InventoryRepository extends BaseRepository
                 $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
                 $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
 
-                event(new InventoryCreated($auth_link, $asset_link));
+                event(new InventoryUpdated($auth_link, $asset_link));
 
                 return $inventory;
             }
 
-            throw new GeneralException(__('exceptions.backend.inventories.create_error'));
+            throw new GeneralException(__('exceptions.backend.inventories.update_error'));
         });
     }
 

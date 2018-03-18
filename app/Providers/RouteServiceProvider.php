@@ -6,6 +6,7 @@ use App\Models\Auth\User;
 use App\Models\Distributor\Distributor;
 use App\Models\Inventory\Inventory;
 use App\Models\Client\Client;
+use App\Models\Transaction\Transaction;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -61,6 +62,10 @@ class RouteServiceProvider extends ServiceProvider
             $client = new Client;
 
             return Client::withTrashed()->where($client->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('transaction', function ($value) {
+            return Transaction::with(['client_transactions', 'user'])->where('reference_id', $value)->first();
         });
 
         parent::boot();

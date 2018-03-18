@@ -7,31 +7,18 @@
             </tr>
 
             <tr>
-                <th>{{ __('labels.backend.inventories.tabs.content.overview.distributor') }}</th>
-                @if (count($item->distributor))
-                    @if ($item->distributor->trashed())
-                        <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a> <span style="font-size: 10px;" class="badge badge-danger">Deleted | Recoverable</span></td>
-                    @else
-                        <td><a href="{{ route('admin.distributor.show', $item->distributor->id) }}">{{ $item->distributor->name }}</a></td>
-                    @endif
-                @else
-                    <td><span class="badge badge-danger">Permanently Deleted</span></td>
-                @endif
-            </tr>
-
-            <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.unit_type') }}</th>
-                <td>{{ $item->unit_type->name }}</td>
+                <td>{!! $item->unit_type_id == 0 ? 'N/A' : $item->unit_type->name !!}</td>
             </tr>
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.stocks') }}</th>
-                <td>{{ $item->stocks }} {{ $item->unit_type->name }}</td>
+                <td>{!! $item->unit_type_id == 0 ? '0' : $item->stocks .' '. $item->unit_type->name !!}</td>
             </tr>
 
             <tr>
                 <th>{{ __('labels.backend.inventories.tabs.content.overview.critical_stocks_level') }}</th>
-                <td>{{ $item->critical_stocks_level }} {{ $item->unit_type->name }}</td>
+                <td>{!! $item->unit_type_id == 0 ? '0' : $item->critical_stocks_level .' '. $item->unit_type->name !!}</td>
             </tr>
 
             <tr>

@@ -24,4 +24,5 @@ class Client extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['full_name'];
 }

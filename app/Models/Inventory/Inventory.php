@@ -24,6 +24,4 @@ class Inventory extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
-    protected $appends = ['name_and_description'];
 }

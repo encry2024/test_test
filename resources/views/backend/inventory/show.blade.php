@@ -21,14 +21,22 @@
             <div class="row mt-4 mb-4">
                 <div class="col">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-inventory">
+                        <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-expanded="true"><i class="fa fa-user"></i> {{ __('labels.backend.inventories.tabs.titles.overview') }}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#suppliers" role="tab" aria-controls="suppliers" aria-expanded="true"><i class="fa fa-truck"></i> Suppliers</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
                             @include('backend.inventory.show.tabs.overview')
+                        </div><!--tab-->
+
+                        <div class="tab-pane" id="suppliers" role="tabpanel" aria-expanded="true">
+                            @include('backend.inventory.show.tabs.suppliers')
                         </div><!--tab-->
                     </div><!--tab-content-->
                 </div><!--col-->

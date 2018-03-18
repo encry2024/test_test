@@ -79,9 +79,10 @@ return [
             'distributor'   =>  'Distributors',
             'client'        =>  'Clients',
             'inventory'     =>  'Inventory',
-            'dashboard' => 'Dashboard',
-            'general'   => 'General',
-            'system'    => 'System',
+            'dashboard'     =>  'Dashboard',
+            'transactions'  =>  'Transactions',
+            'general'       =>  'General',
+            'system'        =>  'System',
         ],
     ],
 

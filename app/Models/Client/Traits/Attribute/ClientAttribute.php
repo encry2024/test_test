@@ -7,6 +7,11 @@ namespace App\Models\Client\Traits\Attribute;
  */
 trait ClientAttribute
 {
+    public function getContactPersonFullNameAttribute()
+    {
+        return $this->contact_person_first_name . ' ' . $this->contact_person_last_name;
+    }
+
     /**
      * @return string
      */

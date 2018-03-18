@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('labels.backend.inventories.table.name') }}</th>
-                                    <th>{{ __('labels.backend.inventories.table.price_per_unit') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.stocks') }}</th>
+                                    <th>{{ __('labels.backend.inventories.table.unit_type') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.created_at') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.updated_at') }}</th>
                                     <th>{{ __('labels.general.actions') }}</th>
@@ -45,19 +45,9 @@
                                     class="bg-warning" style="color: black;"
                                 @endif
                                 >
-                                    <td>
-                                        @if (count($item->distributor))
-                                            @if ($item->distributor->trashed())
-                                                {{ $item->name }} - N/A
-                                            @else
-                                                {{ $item->name }} - {{ $item->distributor->name }}
-                                            @endif
-                                        @else
-                                            {{ $item->name }} - N/A
-                                        @endif
-                                    </td>
-                                    <td>PHP {{ number_format($item->price_per_unit, 2) }}</td>
-                                    <td>{{ $item->stocks }} {{ $item->unit_type->name }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->stocks }}</td>
+                                    <td>{!! $item->unit_type_id == 0 ? 'N/A' : $item->stocks .' '. $item->unit_type->name !!}</td>
                                     <td>{{ $item->created_at->diffForHumans() }}</td>
                                     <td>{{ $item->updated_at->diffForHumans() }}</td>
                                     <td>{!! $item->action_buttons !!}</td>

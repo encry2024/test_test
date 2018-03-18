@@ -9,6 +9,8 @@ use Auth;
 # Models
 use App\Models\Auth\User;
 use App\Models\Distributor\Distributor;
+use App\Models\Inventory\Inventory;
+use App\Models\DistributorInventory\DistributorInventory;
 # Exception
 use App\Exceptions\GeneralException;
 # Repository
@@ -18,6 +20,7 @@ use App\Events\Backend\Distributor\DistributorCreated;
 use App\Events\Backend\Distributor\DistributorUpdated;
 use App\Events\Backend\Distributor\DistributorRestored;
 use App\Events\Backend\Distributor\DistributorPermanentlyDeleted;
+use App\Events\Backend\Distributor\DistributorCreatedInventory;
 
 /**
  * Class DistributorRepository.
@@ -170,5 +173,41 @@ class DistributorRepository extends BaseRepository
         }
 
         throw new GeneralException(__('exceptions.backend.distributor.restore_error'));
+    }
+
+    public function storeInventory(array $data, $distributor_request)
+    {
+        $dataIndex      = count($data['name']);
+        $dataIncrement  = 0;
+        $distributor_id = $distributor_request['distributor'];
+
+        $distributor    = Distributor::find($distributor_id);
+
+        DB::transaction(function () use ($data, $distributor_id, $dataIndex, $dataIncrement, $distributor) {
+            while($dataIncrement != $dataIndex) {
+                $inventory       = Inventory::firstOrNew(['name' => strtoupper($data['name'][$dataIncrement])]);
+
+                if ($inventory->save()) {
+                    $distributor_inventory                  = new DistributorInventory();
+                    $distributor_inventory->distributor_id  = $distributor->id;
+                    $distributor_inventory->inventory_id    = $inventory->id;
+                    $distributor_inventory->selling_price   = $data['selling_price'][$dataIncrement];
+
+                    if ($distributor_inventory->save()) {
+                        $dataIncrement++;
+                    }
+                } else {
+                    throw new GeneralException(__('exceptions.backend.distributors.update_error'));
+                }
+            }
+
+            $auth_link  = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+            $asset_link = "<a href='".route('admin.distributor.show', $distributor->id)."'>".$distributor->name.'</a>';
+
+            event(new DistributorCreatedInventory($auth_link, $dataIndex ,$asset_link));
+
+            
+        });
+
     }
 }

@@ -27,6 +27,12 @@
             </li>
             @endif
 
+            @if ($logged_in_user->can('view transaction'))
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/transactions')) }}" href="{{ route('admin.transactions.index') }}"><i class="fa fa-truck"></i> {{ __('menus.backend.sidebar.transactions') }}</a>
+            </li>
+            @endif
+
             <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
             </li>

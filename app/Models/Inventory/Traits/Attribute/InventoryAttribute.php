@@ -7,18 +7,6 @@ namespace App\Models\Inventory\Traits\Attribute;
  */
 trait InventoryAttribute
 {
-    public function getNameAndDescriptionAttribute()
-    {
-        if (! count($this->distributor)) {
-            return $this->name;
-        } else {
-            if ($this->distributor->trashed()) {
-                return $this->name;
-            } else {
-                return '[' . $this->distributor->name . '] ' . $this->name;
-            }
-        }
-    }
     /**
      * @return string
      */

@@ -31,3 +31,8 @@ Breadcrumbs::register('admin.distributor.deleted', function ($breadcrumbs) {
     $breadcrumbs->parent('admin.distributor.index');
     $breadcrumbs->push(__('labels.backend.distributors.deleted'), route('admin.distributor.deleted'));
 });
+
+Breadcrumbs::register('admin.distributor.inventory.create', function ($breadcrumbs, $distributor) {
+    $breadcrumbs->parent('admin.distributor.show', $distributor);
+    $breadcrumbs->push('Create Inventory', route('admin.distributor.inventory.create', $distributor));
+});

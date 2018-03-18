@@ -72,14 +72,14 @@ class InventoryController extends Controller
         $this->inventoryRepository->create($request->only(
             'distributor',
             'unit_type',
-            'name',
+            'inventory',
             'stocks',
             'critical_stocks_level',
             'price_per_unit'
         ));
 
         return redirect()->back()
-            ->withFlashSuccess(__('alerts.backend.inventories.created', ['item' => strtoupper($request->name)]));
+            ->withFlashSuccess(__('alerts.backend.inventories.updated'));
     }
 
     /**
@@ -157,19 +157,23 @@ class InventoryController extends Controller
         $current_stock   = $inventory->stocks;
         $total_stocks    = $requested_stock + $current_stock;
 
-        if ($inventory->update(['stocks' => $total_stocks])) {
-            $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
-            $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+        if ($inventory->unit_type_id == 0) {
+            return redirect()->back()->withFlashWarning('Can\'t restock. Item doesn\'t have unit type. Click view button and add additional information.');
+        } else { 
+            if ($inventory->update(['stocks' => $total_stocks])) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
 
-            event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
+                event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
+            }
+
+            return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name);
         }
-
-        return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name);
     }
 
     public function getItem(Request $request)
     {
-        $inventories = Inventory::with(['distributor', 'unit_type'])->where('id', $request->item_id)->first();
+        $inventories = Inventory::with(['distributors', 'unit_type'])->where('id', $request->item_id)->first();
 
         return json_encode($inventories);
     }

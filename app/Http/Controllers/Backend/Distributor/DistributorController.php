@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Backend\Distributor;
 
 use Auth;
 # Requests
+use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Distributor\ManageDistributorRequest;
 use App\Http\Requests\Backend\Distributor\StoreDistributorRequest;
 use App\Http\Requests\Backend\Distributor\UpdateDistributorRequest;
+use App\Http\Requests\Backend\Inventory\StoreInventoryRequest;
 # Controllers
 use App\Http\Controllers\Controller;
 # Models
@@ -15,6 +17,7 @@ use App\Models\Distributor\Distributor;
 use App\Repositories\Backend\Distributor\DistributorRepository;
 # Events
 use App\Events\Backend\Distributor\DistributorDeleted;
+
 
 class DistributorController extends Controller
 {
@@ -125,5 +128,24 @@ class DistributorController extends Controller
         event(new DistributorDeleted($auth_link, $asset_link));
 
         return redirect()->back()->withFlashSuccess(__('alerts.backend.distributors.deleted', ['distributor' => $distributor->name]));
+    }
+
+    public function createInventory(Distributor $distributor, ManageDistributorRequest $request)
+    {
+        return view('backend.distributor.inventory.create')->withDistributor($distributor);
+    }
+
+    public function storeInventory(Request $request)
+    {
+        $this->distributorRepository->storeInventory($request->only('name', 'selling_price'), $request->only('distributor'));
+
+        return redirect()->back()->withFlashSuccess('Item(s) was successfully added to Distributor\'s Inventory Record');
+    }
+
+    public function getInventory(Request $request)
+    {
+        $distributor = Distributor::whereId($request->distributor_id)->with(['inventories'])->first();
+
+        return json_encode($distributor);
     }
 }

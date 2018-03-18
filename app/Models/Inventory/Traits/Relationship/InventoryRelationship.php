@@ -14,9 +14,9 @@ trait InventoryRelationship
     /**
      * @return mixed
      */
-    public function distributor()
+    public function distributors()
     {
-        return $this->belongsTo(Distributor::class)->withTrashed();
+        return $this->belongsToMany(Distributor::class)->withPivot('selling_price');
     }
 
     /**

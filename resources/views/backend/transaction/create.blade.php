@@ -99,7 +99,7 @@
                                             <select name="inventory" id="inventory-dropdown" class="form-control chosen-select">
                                                 <option value=""></option>
                                                 @foreach ($inventories as $inventory)
-                                                    <option value="{{ $inventory->id }}">{!! $inventory->name_and_description !!}</option>
+                                                    <option value="{{ $inventory->id }}">{!! $inventory->name !!}</option>
                                                 @endforeach
                                             </select>
                                         </div><!--col-->
@@ -141,24 +141,22 @@
                                 </tbody>
                             </table>
                         </div><!-- card-body -->
+                        <div class="card-footer clearfix bg-white">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form_cancel(route('admin.client.index'), __('buttons.general.cancel')) }}
+                                </div><!--col-->
+
+                                <div class="col text-right">
+                                    <button class="btn btn-success" id="transact_button">Transact</button>
+                                </div><!--col-->
+                            </div><!--row-->
+                        </div><!--card-footer-->
                     </div><!-- card -->
                 </div><!-- col -->
             </div><!-- row -->
         </div><!--col-transaction-->
     </div><!-- row -->
-
-    <div class="card-footer clearfix bg-white">
-        <div class="row">
-            <div class="col">
-                {{ form_cancel(route('admin.client.index'), __('buttons.general.cancel')) }}
-            </div><!--col-->
-
-            <div class="col text-right">
-                <button class="btn btn-success" id="transact_button">Transact</button>
-            </div><!--col-->
-        </div><!--row-->
-    </div><!--card-footer-->
-    <br>
 @endsection
 
 @push('after-scripts')
@@ -263,7 +261,7 @@
                 }
             });
         });
-
+        // 
         transact_button.on('click', function() {
             $.ajax({
                 type: 'POST',
@@ -275,11 +273,7 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    notific8(data, {
-                        life:    5000,
-                        theme:  'materialish',
-                        color:  'lilrobot'
-                    });
+                    window.location.href = data;
                 }
             });
         })

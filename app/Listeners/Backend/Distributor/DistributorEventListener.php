@@ -48,6 +48,14 @@ class DistributorEventListener
     }
 
     /**
+     * @param $event
+     */
+    public function onCreatedInventory($event)
+    {
+        \Log::info($event->user.' Stored '. $event->total_added_item .' Item(s) to Distributor '. $event->distributor);
+    }
+
+    /**
      * Register the listeners for the subscriber.
      *
      * @param \Illuminate\Events\Dispatcher $events
@@ -77,6 +85,11 @@ class DistributorEventListener
         $events->listen(
             \App\Events\Backend\Distributor\DistributorRestored::class,
             'App\Listeners\Backend\Distributor\DistributorEventListener@onRestored'
+        );
+
+        $events->listen(
+            \App\Events\Backend\Distributor\DistributorCreatedInventory::class,
+            'App\Listeners\Backend\Distributor\DistributorEventListener@onCreatedInventory'
         );
     }
 }

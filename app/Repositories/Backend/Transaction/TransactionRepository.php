@@ -51,6 +51,7 @@ class TransactionRepository extends BaseRepository
     public function getPaginatedTransaction($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
     {
         return $this->model
+            ->with(['user', 'accounted_client'])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
