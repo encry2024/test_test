@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    {{ html()->modelForm($inventory, 'PATCH', route('admin.inventory.update', $inventory->id))->class('form-horizontal')->open() }}
+{{ html()->modelForm($inventory, 'PATCH', route('admin.inventory.update', $inventory->id))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">

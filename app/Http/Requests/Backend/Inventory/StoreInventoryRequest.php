@@ -28,6 +28,7 @@ class StoreInventoryRequest extends FormRequest
             'inventory'               => 'required',
             'price_per_unit'          => 'max:20',
             'unit_type'               => 'required',
+            'stock_limit'             => 'required',
             'critical_stocks_level'   => 'max:191'
         ];
     }

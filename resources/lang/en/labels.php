@@ -115,6 +115,7 @@ return [
                 'price_per_unit'        =>  'Price/Unit',
                 'unit_type'             =>  'Unit Type',
                 'stocks'                =>  'Stocks',
+                'stock_limit'           =>  'Stock Limit',
                 'created_at'            =>  'Date Created',
                 'updated_at'            =>  'Date Updated',
                 'deleted_at'            =>  'Date Deleted',

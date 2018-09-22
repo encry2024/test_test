@@ -20,6 +20,7 @@ class Inventory extends Model
         'unit_type_id',
         'stocks',
         'critical_stocks_level',
+        'stock_limit',
         'price_per_unit'
     ];
 
