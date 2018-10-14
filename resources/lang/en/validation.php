@@ -134,6 +134,7 @@ return [
                 'price_per_unit'            =>  'Price/Unit',
                 'unit_type'                 =>  'Unit Type',
                 'stocks'                    =>  'Stocks',
+                'stock_limit'               =>  'Stock Limit',
                 'critical_stocks_level'     =>  'Critical Stocks Level'
             ],
 

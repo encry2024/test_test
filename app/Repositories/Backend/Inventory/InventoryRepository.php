@@ -79,7 +79,8 @@ class InventoryRepository extends BaseRepository
                 'unit_type_id'          =>  $data['unit_type'],
                 'stocks'                =>  str_replace(',','',$data['stocks']),
                 'critical_stocks_level' =>  str_replace(',','',$data['critical_stocks_level']),
-                'price_per_unit'        =>  str_replace(',','',$data['price_per_unit'])
+                'price_per_unit'        =>  str_replace(',','',$data['price_per_unit']),
+                'stock_limit'           =>  str_replace(',', '', $data['stock_limit'])
             ]);
 
             if ($inventory) {
@@ -167,7 +168,7 @@ class InventoryRepository extends BaseRepository
         if ($inventory->restore()) {
             $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
             $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
-            
+
             event(new InventoryRestored(Auth::user()->full_name, $asset_link));
 
             return $inventory;

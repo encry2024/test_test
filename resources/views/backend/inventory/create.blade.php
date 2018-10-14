@@ -66,6 +66,20 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.inventory.stock_limit'))->class('col-md-2 form-control-label')->for('stock_limit') }}
+
+                        <div class="col-sm-10">
+                            {{
+                                html()->text('stock_limit')
+                                ->class('form-control numeric-input')
+                                ->placeholder(__('validation.attributes.backend.inventory.stock_limit'))
+                                ->attribute('maxlength', 191)
+                                ->required()
+                            }}
+                        </div>
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.inventory.stocks'))
                         ->class('col-md-2 form-control-label')
                         ->for('stocks') }}

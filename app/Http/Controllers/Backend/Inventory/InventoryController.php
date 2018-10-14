@@ -75,7 +75,8 @@ class InventoryController extends Controller
             'inventory',
             'stocks',
             'critical_stocks_level',
-            'price_per_unit'
+            'price_per_unit',
+            'stock_limit'
         ));
 
         return redirect()->back()
@@ -158,8 +159,8 @@ class InventoryController extends Controller
         $total_stocks    = $requested_stock + $current_stock;
 
         if ($inventory->unit_type_id == 0) {
-            return redirect()->back()->withFlashWarning('Can\'t restock. Item doesn\'t have unit type. Click view button and add additional information.');
-        } else { 
+            return redirect()->back()->withFlashWarning('Cannot restock. Item does not have unit type. Click view button and add additional information.');
+        } else {
             if ($inventory->update(['stocks' => $total_stocks])) {
                 $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
                 $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';

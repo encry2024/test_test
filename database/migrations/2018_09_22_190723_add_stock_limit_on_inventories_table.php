@@ -14,7 +14,7 @@ class AddStockLimitOnInventoriesTable extends Migration
     public function up()
     {
         Schema::table('inventories', function (Blueprint $table) {
-            $table->integer('stock_limit')->after('critical_stocks_level');
+            $table->integer('stock_limit')->nullable()->after('critical_stocks_level');
         });
     }
 

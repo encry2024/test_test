@@ -29,7 +29,7 @@
                                 <tr>
                                     <th>{{ __('labels.backend.inventories.table.name') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.stocks') }}</th>
-                                    <th>{{ __('labels.backend.inventories.table.unit_type') }}</th>
+                                    <th>{{ __('labels.backend.inventories.table.stock_limit') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.created_at') }}</th>
                                     <th>{{ __('labels.backend.inventories.table.updated_at') }}</th>
                                     <th>{{ __('labels.general.actions') }}</th>
@@ -44,10 +44,14 @@
                                 @elseif ($item->stocks <= $item->critical_stocks_level)
                                     class="bg-warning" style="color: black;"
                                 @endif
+
+                                @if ($item->stock_limit < $item->stocks)
+                                    class="row-bg-danger text-white"
+                                @endif
                                 >
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->stocks }}</td>
-                                    <td>{!! $item->unit_type_id == 0 ? 'N/A' : $item->stocks .' '. $item->unit_type->name !!}</td>
+                                    <td>{{ number_format($item->stocks, 2) }} {!! $item->unit_type_id == 0 ? 'N/A' : $item->unit_type->name !!}</td>
+                                    <td>{!! $item->unit_type_id == 0 ? 'N/A' : number_format($item->stock_limit, 2) .' '. $item->unit_type->name !!}</td>
                                     <td>{{ $item->created_at->diffForHumans() }}</td>
                                     <td>{{ $item->updated_at->diffForHumans() }}</td>
                                     <td>{!! $item->action_buttons !!}</td>
@@ -74,9 +78,8 @@
         </div><!--card-body-->
     </div><!--card-->
 
-    <form method="POST" class="modal fade in" tabindex="-1" role="dialog" id="add-item-stocks">
-        {{ csrf_field() }}
-        {{ method_field('PATCH') }}
+    <div class="modal fade in" tabindex="-1" role="dialog" id="add-item-stocks">
+
 
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -86,7 +89,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <form class="modal-body" method="POST" id="update_stock_form">
+                    {{ csrf_field() }}
+                    {{ method_field('PATCH') }}
                     <div class="row mt-4 mb-4">
                         <div class="col">
                             <div class="form-group row">
@@ -98,14 +103,42 @@
                             </div><!--form-group-->
                         </div><!--col-->
                     </div><!--row-->
-                </div>
+                </form>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark">Update</button>
+                    @if ($item->stocks > $item->stock_limit)
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#stock_limit_reached_modal">Update</button>
+                    @else
+                        <button type="submit" class="btn btn-dark">Update</button>
+                    @endif
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <div class="modal fade in" tabindex="-1" role="dialog" id="stock_limit_reached_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Stock Limit Reached</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mt-4 mb-4">
+                        <div class="col">
+                        <p>Item has reached maximum stock limit. Would you like to restock?</p>
+                        </div>
+                    </div><!--row-->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark" onclick="document.getElementById('update_stock_form').submit();">Update Anyway</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function getUnitType(id, stocks, description) {
@@ -114,7 +147,7 @@
 
             document.getElementById('edit-stocks').value = stocks;
 
-            $("#add-item-stocks").attr('action', url);
+            $("#update_stock_form").attr('action', url);
         }
     </script>
 @endsection
