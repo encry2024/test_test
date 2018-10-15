@@ -125,6 +125,7 @@ class InventoryController extends Controller
             'unit_type',
             'name',
             'stocks',
+            'stock_limit',
             'critical_stocks_level',
             'price_per_unit'
         ));
@@ -148,8 +149,6 @@ class InventoryController extends Controller
         event(new InventoryDeleted($auth_link, $asset_link));
 
         return redirect()->back()->withFlashSuccess(__('alerts.backend.inventories.deleted', ['item' => $inventory->name]));
-
-        // return redirect()->route('admin.inventory.deleted')->withFlashSuccess(__('alerts.backend.inventorys.deleted', ['inventory' => $inventory->name]));
     }
 
     public function addStocks(Request $request, Inventory $inventory)

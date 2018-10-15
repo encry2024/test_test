@@ -20,12 +20,6 @@
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Inventory Actions">
                                     <a href="{{ route('admin.client.transaction.show', $transaction->reference_id) }}" class="btn btn-info"><i class="fa fa-search"></i></a>
-                                    <a href="{{ route('admin.client.transaction.destroy', ['client' => $client->id, 'transaction' => $transaction->id]) }}"
-                                    data-method="delete"
-                                    data-trans-button-cancel="{{ __('buttons.general.cancel') }}"
-                                    data-trans-button-confirm="{{ __('buttons.general.crud.delete') }}"
-                                    data-trans-title="{{ __('strings.backend.general.are_you_sure') }}"
-                                    class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="{ {__('buttons.general.crud.delete') }}"></i></a>
                                 </div>
                             </td>
                         </tr>

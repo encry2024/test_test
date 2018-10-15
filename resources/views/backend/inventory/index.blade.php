@@ -90,7 +90,7 @@
 
                                     <tbody>
                                     @foreach ($inventories as $item)
-                                        @if ($item->stocks != 0)
+                                        @if (($item->stocks != 0) && ($item->stocks < 0))
                                         <tr
                                         @if ($item->stocks = 0)
                                             class="bg-danger" style="color: white;"

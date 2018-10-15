@@ -7,8 +7,6 @@ Route::group([
     'namespace'  => 'Transaction',
 ], function () {
 
-
-
     Route::group([
         'prefix'     => 'client',
         'as'         => 'client.'
@@ -17,7 +15,7 @@ Route::group([
         Route::get('{client}/transaction/create', 'TransactionController@create')->name('transaction.create');
         Route::post('transaction/create', 'TransactionController@store')->name('transaction.store');
         Route::get('transaction/{transaction}', 'TransactionController@show')->name('transaction.show');
-        Route::post('{client}/transaction/{transaction}/destroy', 'TransactionController@destroy')->name('transaction.destroy');
+        Route::delete('{client}/transaction/{transaction}/destroy', 'TransactionController@destroy')->name('transaction.destroy');
     });
 
     Route::get('transactions', 'TransactionController@index')->name('transactions.index');

@@ -5,6 +5,7 @@ namespace App\Models\Inventory\Traits\Relationship;
 use App\Models\Distributor\Distributor;
 use App\Models\UnitType\UnitType;
 use App\Models\Client\Client;
+use App\Models\DistributorInventory\DistributorInventory;
 
 /**
  * Trait InventoryRelationship.
@@ -30,5 +31,10 @@ trait InventoryRelationship
     public function clients()
     {
         return $this->belongsToMany(Client::class);
+    }
+
+    public function distributor_inventory()
+    {
+        return $this->hasOne(DistributorInventory::class, 'inventory_id');
     }
 }

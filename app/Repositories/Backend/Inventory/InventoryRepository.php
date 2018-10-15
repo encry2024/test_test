@@ -15,6 +15,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Inventory\Inventory;
 use App\Models\UnitType\UnitType;
 use Auth;
+use App\Models\DistributorInventory\DistributorInventory;
 # Exceptions
 use App\Exceptions\GeneralException;
 # Repository
@@ -24,6 +25,7 @@ use App\Events\Backend\Inventory\InventoryCreated;
 use App\Events\Backend\Inventory\InventoryUpdated;
 use App\Events\Backend\Inventory\InventoryRestored;
 use App\Events\Backend\Inventory\InventoryPermanentlyDeleted;
+use App\Events\Backend\Inventory\InventoryRestocked;
 
 /**
  * Class InventoryRepository.
@@ -106,21 +108,25 @@ class InventoryRepository extends BaseRepository
     {
         return DB::transaction(function () use ($inventory, $data) {
             if ($inventory->update([
-                'distributor_id'        =>  $data['distributor'],
                 'unit_type_id'          =>  $data['unit_type'],
                 'name'                  =>  strtoupper($data['name']),
                 'stocks'                =>  str_replace(',','',$data['stocks']),
+                'stock_limit'           =>  str_replace(',','',$data['stock_limit']),
                 'critical_stocks_level' =>  str_replace(',','',$data['critical_stocks_level']),
                 'price_per_unit'        =>  str_replace(',','',$data['price_per_unit'])
             ]))
 
             {
-                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
-                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+                $distributor_inventory = DistributorInventory::where('inventory_id', $inventory->id)->first();
 
-                event(new InventoryUpdated($auth_link, $asset_link));
+                if ($distributor_inventory->update(['distributor_id' => $data['distributor']])) {
+                    $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                    $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
 
-                return $inventory;
+                    event(new InventoryUpdated($auth_link, $asset_link));
+
+                    return $inventory;
+                }
             }
 
             throw new GeneralException(__('exceptions.backend.inventories.update_error'));
@@ -179,7 +185,7 @@ class InventoryRepository extends BaseRepository
 
     public function restock($inventory, $data)
     {
-        $requested_stock = $request->stocks;
+        $requested_stock = $data['stocks'];
         $current_stock   = $inventory->stocks;
         $total_stocks    = $requested_stock + $current_stock;
 
@@ -192,7 +198,7 @@ class InventoryRepository extends BaseRepository
 
                 event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
 
-                return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name.'"');
+                return redirect()->back()->withFlashSuccess('You have successfully restocked '.$data['stocks'].$inventory->unit_type->name.' on item "'.$inventory->name.'"');
             }
         }
     }

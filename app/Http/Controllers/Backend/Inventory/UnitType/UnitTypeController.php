@@ -15,6 +15,7 @@ use App\Http\Requests\Backend\Inventory\UnitType\UpdateUnitTypeRequest;
 use App\Repositories\Backend\Inventory\UnitType\UnitTypeRepository;
 # Models
 use App\Models\UnitType\UnitType;
+use App\Http\Requests\Backend\Inventory\DeleteInventoryRequest;
 
 class UnitTypeController extends Controller
 {
@@ -74,8 +75,15 @@ class UnitTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UnitType $unit_type, DeleteInventoryRequest $request)
     {
-        //
+        $this->unitTypeRepository->deleteById($unit_type->id);
+
+        $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+        $asset_link = "<a href='".route('admin.inventory.unit_type.show', $unit_type->id)."'>".$unit_type->name.'</a>';
+
+        event(new UnitTypeDeleted($auth_link, $asset_link));
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.unit_types.deleted', ['unit_type' => $unit_type->name]));
     }
 }

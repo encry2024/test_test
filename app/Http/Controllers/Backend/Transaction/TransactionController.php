@@ -63,6 +63,8 @@ class TransactionController extends Controller
             'client'
         ));
 
+
+
         /*return json_encode($this->transactionRepository->create($request->only(
             'orders',
             'client'
@@ -115,7 +117,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction, Request $request)
     {
-        $this->transactionRepository->deleteById($transaction->id);
+        $transaction = $this->transactionRepository->deleteById($transaction->id);
 
         $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
         $asset_link = "<a href='".route('admin.transaction.show', $transaction->id)."'>".$transaction->reference_id.'</a>';

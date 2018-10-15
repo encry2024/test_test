@@ -33,11 +33,11 @@
                                 <tr>
                                     <td>{{ $transaction->reference_id }}</td>
                                     <td>{{ $transaction->user->full_name }}</td>
-                                    <td>{{ $transaction->accounted_client->client->name }}</td>
+                                    <td>{{ $transaction->client->name }}</td>
                                     <td>{{ date('F d, Y (h:i A)', strtotime($transaction->created_at)) }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Inventory Actions">
-                                            <a class="btn btn-info" href="{{ route('admin.client.show', $transaction->accounted_client->client->id) }}"><i class="fa fa-search"></i></a>
+                                            <a class="btn btn-info" href="{{ route('admin.client.show', $transaction->client->id) }}"><i class="fa fa-search"></i></a>
                                         </div>
                                     </td>
                                 </tr>

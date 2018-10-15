@@ -14,6 +14,14 @@ return [
     */
 
     'backend' => [
+        'transactions' =>  [
+            'created'   =>  'Transaction ":transaction" was successfully created.',
+            'deleted'   =>  'Transaction ":transaction" was successfully deleted.',
+            'updated'   =>  'Transaction ":transaction" was successfully updated',
+            'restored'  =>  'Transaction ":transaction" was successfully restored.',
+            'deleted_permanently'   =>  'Transaction ":transaction" was successfully deleted permanently.',
+        ],
+
         'clients' =>  [
             'created'   =>  'Client ":client" was successfully created.',
             'deleted'   =>  'Client ":client" was successfully deleted.',

@@ -12,4 +12,9 @@ class DistributorInventory extends Model
         SoftDeletes;
 
     protected $table = 'distributor_inventory';
+
+    protected $fillable = [
+        'distributor_id',
+        'inventory_id'
+    ];
 }

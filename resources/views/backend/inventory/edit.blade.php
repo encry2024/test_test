@@ -47,7 +47,7 @@
                             <select name="distributor" id="distributor-dropdown" class="form-control chosen-select">
                                 <option value=""></option>
                                 @foreach ($distributors as $distributor)
-                                    <option value="{{ $distributor->id }}" {!! $inventory->distributor_id == $distributor->id ? 'selected' : '' !!}>{{ $distributor->name }}</option>
+                                    <option value="{{ $distributor->id }}" {!! $inventory->distributor_inventory->distributor_id == $distributor->id ? 'selected' : '' !!}>{{ $distributor->name }}</option>
                                 @endforeach
                             </select>
                         </div><!--col-->
@@ -69,13 +69,27 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.inventory.stock_limit'))->class('col-md-2 form-control-label')->for('stock_limit') }}
+
+                        <div class="col-sm-10">
+                            {{
+                                html()->text('stock_limit')
+                                ->class('form-control numeric-input')
+                                ->placeholder(__('validation.attributes.backend.inventory.stock_limit'))
+                                ->attribute('maxlength', 191)
+                                ->required()
+                            }}
+                        </div>
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
                         {{ html()->label(__('validation.attributes.backend.inventory.stocks'))
                         ->class('col-md-2 form-control-label')
                         ->for('stocks') }}
 
                         <div class="input-group col-md-10">
                             <span class="input-group-prepend">
-                                <select name="unit_type" id="unit-type-dropdown" class="custom-select">
+                                <select name="unit_type" id="unit-type-dropdown" class="form-control chosen-select">
                                     <option selected disabled>-- Select Unit Type --</option>
                                     @foreach ($unit_types as $unit_type)
                                         <option value="{{ $unit_type->id }}" {{ $inventory->unit_type_id == $unit_type->id ? 'selected' : '' }}>{{ $unit_type->name }}</option>

@@ -84,22 +84,22 @@ class ClientController extends Controller
      */
     public function show(Client $client, ManageClientRequest $request)
     {
-        $user = User::where('email', $client->contact_person_email)->first();
+        // $user = User::where('email', $client->contact_person_email)->first();
 
-        $transactions = DB::table('client_transaction')
-        ->leftJoin('transactions', function ($join) {
-            $join->on('client_transaction.transaction_id', '=', 'transactions.id');
-        })
-        ->leftJoin('users', function ($join) {
-            $join->on('users.id', '=', 'transactions.user_id');
-        })
-        ->leftJoin('inventories', function ($join) {
-            $join->on('client_transaction.inventory_id', '=', 'inventories.id');
-        })
-        ->where('transactions.client_id', '=', $user->id)
-        ->get();
+        // $transactions = DB::table('client_transaction')
+        // ->leftJoin('transactions', function ($join) {
+        //     $join->on('client_transaction.transaction_id', '=', 'transactions.id');
+        // })
+        // ->leftJoin('users', function ($join) {
+        //     $join->on('users.id', '=', 'transactions.user_id');
+        // })
+        // ->leftJoin('inventories', function ($join) {
+        //     $join->on('client_transaction.inventory_id', '=', 'inventories.id');
+        // })
+        // ->where('transactions.client_id', '=', $user->id)
+        // ->get();
 
-        return view('backend.client.show')->withClient($client)->withTransactions($transactions);
+        return view('backend.client.show')->withClient($client);
     }
 
     /**
@@ -142,7 +142,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client, ManageClientRequest $request)
     {
-        if ($this->clientRepository->deleteById($client->id)) 
+        if ($this->clientRepository->deleteById($client->id))
         {
             $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
             $asset_link = "<a href='".route('admin.client.deleted-profile', $client->id)."'>".$client->name.'</a>';

@@ -80,11 +80,11 @@ class TransactionRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $client         = Client::find($data['client']);
-            $client_account = User::where('email', $client->contact_person_email)->first();
 
             $transaction = parent::create([
                 'user_id'               =>  Auth::user()->id,
-                'client_id'             =>  $client_account->id
+                'client_id'             =>  $client->id,
+                'status'                =>  'DELIVERED'
             ]);
 
             if ($transaction) {
