@@ -113,8 +113,15 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaction $transaction, Request $request)
     {
-        //
+        $this->transactionRepository->deleteById($transaction->id);
+
+        $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+        $asset_link = "<a href='".route('admin.transaction.show', $transaction->id)."'>".$transaction->reference_id.'</a>';
+
+        event(new TransactionDeleted($auth_link, $asset_link));
+
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.transactions.deleted', ['transaction' => $transaction->reference_id]));
     }
 }
