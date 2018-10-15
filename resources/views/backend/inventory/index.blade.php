@@ -188,7 +188,8 @@
     </div>
 
     <script>
-        function getUnitType(id, stocks, description) {
+        function getUnitType(id, stocks)
+        {
             let url = "{{ route('admin.inventory.update.stocks', ':item_id') }}";
                 url = url.replace(':item_id', id);
 
@@ -197,7 +198,8 @@
             $("#update_stock_form").attr('action', url);
         }
 
-        function closeActiveModal(modal) {
+        function closeActiveModal(modal)
+        {
             $(modal).toggle();
             $('.modal-backdrop').remove();
         }
