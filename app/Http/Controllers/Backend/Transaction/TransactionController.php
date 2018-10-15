@@ -67,6 +67,7 @@ class TransactionController extends Controller
             'orders',
             'client'
         )));*/
+
         Session::flash('flash_success', 'Transaction was successfully created.');
 
         return json_encode(route('admin.client.show', $request->client));

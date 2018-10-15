@@ -105,7 +105,7 @@ class TransactionRepository extends BaseRepository
 
                 $transaction->update(['reference_id' => date('Y-m-d-').$transaction->id]);
 
-                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $auth_link  = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
                 $asset_link = "<a href='".route('admin.client.show', $data['client'])."'>".$transaction->reference_id.'</a>';
 
                 event(new TransactionCreated($auth_link, $asset_link));
@@ -189,7 +189,7 @@ class TransactionRepository extends BaseRepository
         if ($transaction->restore()) {
             $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
             $asset_link = "<a href='".route('admin.inventory.show', $transaction->id)."'>".$transaction->name.'</a>';
-            
+
             event(new TransactionRestored(Auth::user()->full_name, $asset_link));
 
             return $transaction;
