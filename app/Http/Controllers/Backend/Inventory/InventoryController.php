@@ -69,7 +69,7 @@ class InventoryController extends Controller
      */
     public function store(StoreInventoryRequest $request)
     {
-        $this->inventoryRepository->create($request->only(
+        $item = $this->inventoryRepository->create($request->only(
             'distributor',
             'unit_type',
             'inventory',
@@ -80,7 +80,7 @@ class InventoryController extends Controller
         ));
 
         return redirect()->back()
-            ->withFlashSuccess(__('alerts.backend.inventories.updated'));
+            ->withFlashSuccess(__('alerts.backend.inventories.updated', ['item' => $item->name]));
     }
 
     /**
@@ -154,22 +154,11 @@ class InventoryController extends Controller
 
     public function addStocks(Request $request, Inventory $inventory)
     {
-        $requested_stock = $request->stocks;
-        $current_stock   = $inventory->stocks;
-        $total_stocks    = $requested_stock + $current_stock;
+        $add_stock = $this->inventoryRepository->restock($inventory, $request->only(
+            'stocks'
+        ));
 
-        if ($inventory->unit_type_id == 0) {
-            return redirect()->back()->withFlashWarning('Cannot restock. Item does not have unit type. Click view button and add additional information.');
-        } else {
-            if ($inventory->update(['stocks' => $total_stocks])) {
-                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
-                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
-
-                event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
-            }
-
-            return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name);
-        }
+        return $add_stock;
     }
 
     public function getItem(Request $request)

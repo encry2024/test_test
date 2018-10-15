@@ -176,4 +176,24 @@ class InventoryRepository extends BaseRepository
 
         throw new GeneralException(__('exceptions.backend.inventories.restore_error'));
     }
+
+    public function restock($inventory, $data)
+    {
+        $requested_stock = $request->stocks;
+        $current_stock   = $inventory->stocks;
+        $total_stocks    = $requested_stock + $current_stock;
+
+        if ($inventory->unit_type_id == 0) {
+            return redirect()->back()->withFlashWarning('Cannot restock. Item does not have unit type. Click view button and add additional information.');
+        } else {
+            if ($inventory->update(['stocks' => $total_stocks])) {
+                $auth_link = "<a href='".route('admin.auth.user.show', auth()->id())."'>".Auth::user()->full_name.'</a>';
+                $asset_link = "<a href='".route('admin.inventory.show', $inventory->id)."'>".$inventory->name.'</a>';
+
+                event(new InventoryRestocked($auth_link, $requested_stock.$inventory->unit_type->name, $asset_link));
+
+                return redirect()->back()->withFlashSuccess('You have successfully restocked '.$request->stocks.$inventory->unit_type->name.' on item "'.$inventory->name.'"');
+            }
+        }
+    }
 }
