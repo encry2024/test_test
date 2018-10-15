@@ -44,12 +44,13 @@ return [
         ],
 
         'distributors'  =>  [
-            'create'    =>  'Create Distributor',
-            'edit'      =>  'Edit :distributor',
-            'list'      =>  'Distributors',
-            'view'      =>  'View :distributor',
-            'deleted'   =>  'Deleted Distributors',
-            'cart'      =>  'Cart',
+            'create'        =>  'Create Distributor',
+            'edit'          =>  'Edit :distributor',
+            'list'          =>  'Distributors',
+            'view'          =>  'View :distributor',
+            'deleted'       =>  'Deleted Distributors',
+            'cart'          =>  'Cart',
+
 
             'management'    =>  'Distributor Management',
 
@@ -73,7 +74,8 @@ return [
                 'titles'    =>  [
                     'overview'  =>  'Overview',
                     'products'  =>  'Distributor Products',
-                    'cart'      =>  'Product Cart'
+                    'cart'      =>  'Product Cart',
+                    'inventory' =>  'Inventory',
                 ],
 
                 'content'   =>  [

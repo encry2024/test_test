@@ -20,12 +20,18 @@ trait InventoryAttribute
      */
     public function getRestockButtonAttribute()
     {
-        if (auth()->user()->can('edit inventory'))
+        if (auth()->user()->can('edit inventory')) {
+            if ($this->stocks >= $this->stock_limit) {
+                return '<a href="#"
+                data-toggle="modal" data-target="#stock_limit_reached_modal" onclick="getUnitType('.$this->id.',\''.$this->stocks.'\')" class="btn btn-success"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Add Stocks"></i></a>';
+            }
+
             return '<a href="#"
              onclick="getUnitType('.$this->id.',\''.$this->stocks.'\')"
-             data-toggle="modal" data-target="#add-item-stocks" class="btn btn-success"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Add Stocks"></i></a>';
-         else
-            return '';
+             data-toggle="modal" data-target="#update_stock_form" class="btn btn-success"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Add Stocks"></i></a>';
+        }
+
+        return '';
     }
 
     /**
@@ -61,7 +67,7 @@ trait InventoryAttribute
     public function getDeletePermanentlyButtonAttribute()
     {
         if (auth()->user()->can('delete inventory')) {
-            return '<a href="' . route('admin.inventory.delete-permanently', $this) . '" 
+            return '<a href="' . route('admin.inventory.delete-permanently', $this) . '"
             data-trans-button-cancel="Cancel"
             data-trans-button-confirm="Yes, Delete Permanently"
             data-trans-title="Are you sure you want to delete this item permanently?"
@@ -77,7 +83,7 @@ trait InventoryAttribute
     public function getRestoreButtonAttribute()
     {
         if (auth()->user()->can('restore inventory'))
-            return '<a href="'.route('admin.inventory.restore', $this).'" 
+            return '<a href="'.route('admin.inventory.restore', $this).'"
             data-trans-button-cancel="Cancel"
             data-trans-button-confirm="Yes, Restore"
             data-trans-title="Are you sure you want to restore this item?"
