@@ -15,27 +15,27 @@ return [
 
     'backend' => [
         'clients' =>  [
-            'created'   =>  'Client \':client\' was successfully created.',
-            'deleted'   =>  'Client \':client\' was successfully deleted.',
-            'updated'   =>  'Client \':client\' was successfully updated',
-            'restored'  =>  'Client \':client\' was successfully restored.',
-            'deleted_permanently'   =>  'Client \':client\' was successfully deleted permanently.',
+            'created'   =>  'Client ":client" was successfully created.',
+            'deleted'   =>  'Client ":client" was successfully deleted.',
+            'updated'   =>  'Client ":client" was successfully updated',
+            'restored'  =>  'Client ":client" was successfully restored.',
+            'deleted_permanently'   =>  'Client ":client" was successfully deleted permanently.',
         ],
 
         'inventories' =>  [
-            'created'   =>  'Inventory \':item\' was successfully created.',
-            'deleted'   =>  'Inventory \':item\' was successfully deleted.',
-            'updated'   =>  'Inventory \':item\' was successfully updated',
-            'restored'  =>  'Inventory \':item\' was successfully restored.',
-            'deleted_permanently'   =>  'Inventory \':item\' was successfully deleted permanently.',
+            'created'   =>  'Inventory ":item" was successfully created.',
+            'deleted'   =>  'Inventory ":item" was successfully deleted.',
+            'updated'   =>  'Inventory ":item" was successfully updated',
+            'restored'  =>  'Inventory ":item" was successfully restored.',
+            'deleted_permanently'   =>  'Inventory ":item" was successfully deleted permanently.',
         ],
 
         'distributors' =>  [
-            'created'   =>  'Distributor \':distributor\' was successfully created.',
-            'deleted'   =>  'Distributor \':distributor\' was successfully deleted.',
-            'updated'   =>  'Distributor \':distributor\' was successfully updated',
-            'restored'  =>  'Distributor \':distributor\' was successfully restored.',
-            'deleted_permanently'   =>  'Distributor \':distributor\' was successfully deleted permanently.',
+            'created'   =>  'Distributor ":distributor" was successfully created.',
+            'deleted'   =>  'Distributor ":distributor" was successfully deleted.',
+            'updated'   =>  'Distributor ":distributor" was successfully updated',
+            'restored'  =>  'Distributor ":distributor" was successfully restored.',
+            'deleted_permanently'   =>  'Distributor ":distributor" was successfully deleted permanently.',
         ],
 
         'roles' => [
