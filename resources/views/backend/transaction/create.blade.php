@@ -112,13 +112,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="unit-type">N/A</span>
                                             </div>
-                                            {{ 
+                                            {{
                                                 html()->text('stocks')
                                                 ->class('form-control')
                                                 ->placeholder(__('validation.attributes.backend.inventory.stocks'))
                                                 ->attribute('maxlength', 191)
                                                 ->attribute('min', 0)
-                                                ->required() 
+                                                ->required()
                                             }}
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="critical-stocks">0</span>
@@ -129,7 +129,7 @@
                                     <button class="btn btn-dark pull-right" id="add-btn">Add</button>
                                 </div><!-- col -->
                             </div><!-- row -->
-                            
+
                             <table class="table table-bordered">
                                 <thead>
                                     <th>Inventory</th>
@@ -171,7 +171,7 @@
         }
         return arr;
     }
-    
+
     $(function() {
         // Constant Variables
         const unit_type_label   = $('#unit-type'),
@@ -211,18 +211,18 @@
             });
         });
 
-        stocks_field.on('keypress', function(e) {
-            // console.log(max_stock);
-            let currentValue    = String.fromCharCode(e.which);
-            let value           = $(this).val() + currentValue;
-            let finalValue      = parseFloat(parseFloat(value).toFixed(2));
-            let formattedStock  = parseFloat(parseFloat(max_stocks).toFixed(2));
+        // stocks_field.on('keypress', function(e) {
+        //     // console.log(max_stock);
+        //     let currentValue    = String.fromCharCode(e.which);
+        //     let value           = $(this).val() + currentValue;
+        //     let finalValue      = parseFloat(parseFloat(value).toFixed(2));
+        //     let formattedStock  = parseFloat(parseFloat(max_stocks).toFixed(2));
 
-            if(finalValue >= formattedStock) {
-                e.preventDefault();
-                stocks_field.val(parseFloat(max_stocks));
-            }
-        });
+        //     if(finalValue >= formattedStock) {
+        //         e.preventDefault();
+        //         stocks_field.val(parseFloat(max_stocks));
+        //     }
+        // });
 
         add_button.on('click', function() {
             $.ajax({
@@ -241,9 +241,9 @@
                     if ( !item_verifier.contains(data.id)) {
                         html = "<tr id='product-container'>";
                         html += "<td>"+data.name+"</td>";
-                        html += "<td>"+stocks_field.val()+"</td>";
+                        html += "<td>"+ Number(stocks_field.val()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})+ "</td>";
                         html += "<td>"+data.price_per_unit+"</td>";
-                        html += "<td>"+total_price+"</td>";
+                        html += "<td>"+ Number(total_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) +"</td>";
                         html += "</tr>";
                         // Create associative array to pass on the store transaction request
                         obj[data.id] = stocks_field.val();
@@ -261,7 +261,7 @@
                 }
             });
         });
-        // 
+        //
         transact_button.on('click', function() {
             $.ajax({
                 type: 'POST',
